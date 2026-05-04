@@ -57,9 +57,11 @@ def plot_frame_grid(
 ) -> None:
     """Side-by-side frame comparison at specified k values.
 
-    frames_by_model: {model_name: frames [K, 84, 84, 3]}  (one representative trajectory)
+    frames_by_model: {model_name: frames [K, H, W, 3]}  (one representative trajectory)
     ks: list of k indices (0-indexed) to visualize
-    true_frames: optional {model_name: frames [K, 84, 84, 3]} — shows ground truth in top row
+    true_frames: optional {model_name: frames [K, H, W, 3]} — shows ground truth in top row
+
+    Pixel models in the rollout pipeline currently store 64x64x3 frames.
     """
     models = list(frames_by_model.keys())
     n_rows = len(models) + (1 if true_frames else 0)
@@ -148,6 +150,11 @@ def plot_pca_scatter(
     cloud (red) should diverge from true-frame cloud (black).
 
     pred_frames_k, true_frames_k: [N, H, W, 3] uint8
+
+    Note: this helper is currently not called from any experiment; the
+    pca_scatter_*.png files in results/exp3/ were generated outside the pipeline.
+    Wire it into experiments/exp3_distributional.py if those plots should be
+    regenerated automatically.
     """
     from sklearn.decomposition import PCA
     N = min(len(pred_frames_k), len(true_frames_k))

@@ -54,7 +54,10 @@ def main():
     games = cfg["games"]
     K = cfg["horizon_K"]
     k_star_mult = cfg["k_star_multiplier"]
+    k_fit_min = cfg.get("k_fit_min", 1)
     model_cfgs = cfg["models"]
+    log.info("Power-law fit window: k=%d..%d (k_star_multiplier=%g)",
+             k_fit_min, K, k_star_mult)
 
     summary_rows = []
     all_error_curves: dict[str, dict[str, np.ndarray]] = {m: {} for m in model_cfgs}
@@ -77,7 +80,7 @@ def main():
         true_frames = data["true_frames"]
 
         E_k = per_step_mse(pred_frames, true_frames)
-        fit = fit_power_law(E_k, k_star_multiplier=k_star_mult)
+        fit = fit_power_law(E_k, k_star_multiplier=k_star_mult, k_min=k_fit_min)
 
         df = pd.DataFrame({"k": np.arange(1, len(E_k) + 1), "mse": E_k})
         csv_path = os.path.join(OUT_DIR, f"error_growth_{model_name}_{game}.csv")
@@ -92,10 +95,11 @@ def main():
             "c": fit["c"],
             "k_star": fit["k_star"],
             "fit_r2": fit["fit_r2"],
+            "k_fit_min": fit["k_min"],
         })
         log.info(
-            "%s/%s: alpha=%.3f  k*=%s  R2=%.3f",
-            model_name, game, fit["alpha"], fit["k_star"], fit["fit_r2"],
+            "%s/%s: alpha=%.3f  k*=%s  R2=%.3f  (fit on k>=%d)",
+            model_name, game, fit["alpha"], fit["k_star"], fit["fit_r2"], fit["k_min"],
         )
 
     pbar.close()

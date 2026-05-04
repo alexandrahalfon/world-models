@@ -5,6 +5,15 @@ k=1 is excluded from evaluation — FID is unreliable at k=1 because predicted
 and true frames are nearly identical, producing near-zero estimates with high
 variance at N=2000. fid_horizons is read from configs/experiment.yaml.
 
+PCA-KL uses a *fixed* PCA basis fit once per (model, game) on true frames
+pooled across the evaluated horizons, so KL values are comparable across k.
+Refitting per horizon (the old behavior) makes the basis itself drift with k
+and produced unstable, non-monotonic KL trajectories.
+
+FID adds a tiny covariance ridge (cov_ridge=1e-6 default in compute_fid) to
+suppress the "Matrix is singular" warnings caused by rank-deficient empirical
+covariances at N≈2000 in 2048-dim Inception activation space.
+
 Expected: distributional divergence grows faster than per-frame MSE; the gap
 between FID and MSE is largest for IRIS (VQ-VAE quantization residuals).
 
@@ -19,7 +28,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from src.metrics import compute_fid, compute_pca_kl
+from src.metrics import compute_fid, compute_pca_kl, fit_reference_pca
 from src import visualize
 
 CFG_PATH = os.path.join(os.path.dirname(__file__), "..", "configs", "experiment.yaml")
@@ -55,19 +64,36 @@ def main():
                 continue
 
             data = np.load(cache_path)
-            pred_frames = data["pred_frames"]   # [n_traj, K, 84, 84, 3]
+            pred_frames = data["pred_frames"]   # [n_traj, K, H, W, 3]
             true_frames = data["true_frames"]
+
+            # Fit one shared PCA basis on true frames pooled across the evaluated
+            # horizons. This keeps the projection space fixed across k so KL values
+            # are directly comparable. Subsample if pooling is too large for memory.
+            pooled_idx = [k - 1 for k in fid_horizons]
+            pooled_true = true_frames[:, pooled_idx].reshape(
+                -1, *true_frames.shape[2:]
+            )
+            max_pool_samples = 8000
+            if len(pooled_true) > max_pool_samples:
+                rng = np.random.default_rng(42)
+                sel = rng.choice(len(pooled_true), max_pool_samples, replace=False)
+                pooled_true = pooled_true[sel]
+            pca_ref = fit_reference_pca(pooled_true, n_components=0.95)
+            print(f"[exp3] {model_name}/{game}: PCA basis fit on {len(pooled_true)} "
+                  f"pooled true frames -> {pca_ref.n_components_} dims "
+                  f"({pca_ref.explained_variance_ratio_.sum()*100:.1f}% var)")
 
             fid_vals = []
             kl_vals = []
 
             for k in fid_horizons:
                 k_idx = k - 1  # horizons are 1-indexed in config
-                pred_k = pred_frames[:, k_idx]   # [n_traj, 84, 84, 3]
+                pred_k = pred_frames[:, k_idx]   # [n_traj, H, W, 3]
                 true_k = true_frames[:, k_idx]
 
                 fid_val = compute_fid(pred_k, true_k)
-                kl_val = compute_pca_kl(pred_k, true_k)
+                kl_val = compute_pca_kl(pred_k, true_k, pca=pca_ref)
                 fid_vals.append(fid_val)
                 kl_vals.append(kl_val)
                 print(f"[exp3] {model_name}/{game} k={k}: FID={fid_val:.2f}, KL={kl_val:.4f}")

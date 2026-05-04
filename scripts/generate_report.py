@@ -15,10 +15,20 @@ from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
+import yaml
 
 RESULTS_DIR = "results"
 GAMES = ["Breakout", "Pong", "Boxing"]
 MODELS = ["mlp", "iris", "dreamerv3", "diamond"]
+CFG_PATH = os.path.join(os.path.dirname(__file__), "..", "configs", "experiment.yaml")
+
+
+def _load_cfg() -> dict:
+    try:
+        with open(CFG_PATH) as f:
+            return yaml.safe_load(f)
+    except FileNotFoundError:
+        return {}
 
 
 def _b64_img(path: str) -> str | None:
@@ -70,14 +80,21 @@ def _section(title: str, content: str, id: str = "") -> str:
 
 def build_report() -> str:
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    cfg = _load_cfg()
+    k_star_mult = cfg.get("k_star_multiplier", "?")
+    k_fit_min = cfg.get("k_fit_min", 1)
 
     # ── Section 1: Summary table ─────────────────────────────────────────────
     sec1 = _section(
         "1. Power-law fit summary (α and k*)",
         f"""
-        <p>α: power-law exponent of E_k ~ c·k^α. Larger α = faster compounding error.
-        k*: first step where E_k &gt; 10× baseline (scale-invariant threshold).</p>
+        <p>α: power-law exponent of E_k ~ c·k^α, fitted on k = {k_fit_min}..K.
+        Larger α = faster compounding error.
+        k*: first step where E_k &gt; {k_star_mult}× baseline
+        (mean of the first 5 reliable steps; scale-invariant threshold).</p>
         <p><em>Note: MLP operates in RAM space (128-dim); its α is not comparable to pixel-space models.</em></p>
+        <p><em>Fit window starts at k={k_fit_min} to skip DIAMOND's 4-frame conditioning warm-up
+        (the first 4 predictions are conditioned on a buffer seeded from the initial obs).</em></p>
         {_alpha_table_html()}
         """,
         id="sec-alpha",
