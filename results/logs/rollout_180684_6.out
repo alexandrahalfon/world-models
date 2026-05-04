@@ -1,0 +1,5 @@
+Task 6: model=diamond game=Breakout
+A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+[rollout] Saved diamond_Breakout rollout to results/rollouts/diamond_Breakout.npz
+Done: pred_frames=(2000, 50, 64, 64, 3)

@@ -1,0 +1,13 @@
+
+results/rollouts/*.npz
+
+checkpoints/
+
+*.ext3
+
+__pycache__/
+
+*.pyc
+
+results_all.zip
+results_exp1_fixed.zip

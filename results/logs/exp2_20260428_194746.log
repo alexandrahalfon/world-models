@@ -1,0 +1,13 @@
+2026-04-28 19:47:46,781   [exp2] mlp is RAM-space — skipping frame grid
+2026-04-28 19:47:47,107   [exp2] loaded dreamerv3/Breakout  traj_idx=50
+2026-04-28 19:47:47,441   [exp2] loaded iris/Breakout  traj_idx=50
+2026-04-28 19:47:47,623   [exp2] loaded diamond/Breakout  traj_idx=50
+2026-04-28 19:47:48,391   [exp2] mlp is RAM-space — skipping frame grid
+2026-04-28 19:47:48,718   [exp2] loaded dreamerv3/Pong  traj_idx=50
+2026-04-28 19:47:49,069   [exp2] loaded iris/Pong  traj_idx=50
+2026-04-28 19:47:49,253   [exp2] loaded diamond/Pong  traj_idx=50
+2026-04-28 19:47:49,962   [exp2] mlp is RAM-space — skipping frame grid
+2026-04-28 19:47:50,292   [exp2] loaded dreamerv3/Boxing  traj_idx=50
+2026-04-28 19:47:50,640   [exp2] loaded iris/Boxing  traj_idx=50
+2026-04-28 19:47:50,859   [exp2] loaded diamond/Boxing  traj_idx=50
+2026-04-28 19:47:51,575 Exp 2 completed in 0.1 min

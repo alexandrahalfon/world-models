@@ -1,0 +1,25 @@
+# env_torch: PyTorch stack — MLP, IRIS, DIAMOND, all metrics and visualization
+# Install with: pip install -r requirements_torch.txt
+
+torch>=2.2.0
+torchvision>=0.17.0
+gymnasium[atari]>=0.29.0
+ale-py>=0.8.1
+autorom[accept-rom-license]   # Atari ROM installer
+
+# World model repos (install from source — see scripts/setup_env_torch.sh)
+# iris @ git+https://github.com/eloialonso/iris.git
+# diamond @ git+https://github.com/eloialonso/diamond.git
+
+# Metrics
+scipy>=1.12.0
+scikit-learn>=1.4.0
+pytorch-fid>=0.3.0
+
+# Visualization and data
+matplotlib>=3.8.0
+seaborn>=0.13.0
+pandas>=2.2.0
+numpy>=1.26.0
+pyyaml>=6.0.1
+tqdm>=4.66.0

@@ -1,0 +1,28 @@
+2026-05-03 08:33:15,204 mlp/Breakout: alpha=0.732  k*=7  R2=0.882
+2026-05-03 08:33:15,460 mlp/Pong: alpha=0.832  k*=5  R2=0.294
+2026-05-03 08:33:15,831 mlp/Boxing: alpha=0.745  k*=14  R2=0.927
+2026-05-03 08:33:15,832 rollout cache missing for dreamerv3/Breakout: results/rollouts/dreamerv3_Breakout.npz
+2026-05-03 08:33:15,832   Run rollout.py first (or submit run_rollouts.sbatch).
+2026-05-03 08:33:15,833 rollout cache missing for dreamerv3/Pong: results/rollouts/dreamerv3_Pong.npz
+2026-05-03 08:33:15,833   Run rollout.py first (or submit run_rollouts.sbatch).
+2026-05-03 08:33:15,834 rollout cache missing for dreamerv3/Boxing: results/rollouts/dreamerv3_Boxing.npz
+2026-05-03 08:33:15,834   Run rollout.py first (or submit run_rollouts.sbatch).
+2026-05-03 08:33:15,835 rollout cache missing for iris/Breakout: results/rollouts/iris_Breakout.npz
+2026-05-03 08:33:15,835   Run rollout.py first (or submit run_rollouts.sbatch).
+2026-05-03 08:33:15,836 rollout cache missing for iris/Pong: results/rollouts/iris_Pong.npz
+2026-05-03 08:33:15,836   Run rollout.py first (or submit run_rollouts.sbatch).
+2026-05-03 08:33:15,837 rollout cache missing for iris/Boxing: results/rollouts/iris_Boxing.npz
+2026-05-03 08:33:15,837   Run rollout.py first (or submit run_rollouts.sbatch).
+2026-05-03 08:33:32,751 diamond/Breakout: alpha=0.489  k*=32  R2=0.962
+2026-05-03 08:33:51,154 diamond/Pong: alpha=-0.229  k*=51  R2=0.512
+2026-05-03 08:34:11,255 diamond/Boxing: alpha=0.270  k*=51  R2=0.829
+2026-05-03 08:34:11,269 
+=== Alpha / k* table ===
+  model space     game     alpha          c  k_star   fit_r2
+    mlp   ram Breakout  0.732225  45.409732       7 0.881694
+    mlp   ram     Pong  0.831502  82.887765       5 0.294007
+    mlp   ram   Boxing  0.744703  77.742829      14 0.927280
+diamond pixel Breakout  0.489294   5.722021      32 0.961838
+diamond pixel     Pong -0.228893 730.821280      51 0.512190
+diamond pixel   Boxing  0.270051 129.803263      51 0.829237
+2026-05-03 08:34:14,652 Exp 1 completed in 1.0 min

@@ -1,0 +1,15 @@
+Local run started at Sat May  2 04:05:34 EDT 2026
+
+──────────────────────────────────────────────────────────
+  STEP 1/4  Generate synthetic rollouts
+  CMD:  python scripts/generate_synthetic_rollouts.py
+  TIME: 04:05:34
+──────────────────────────────────────────────────────────
+[1/12] mlp/Breakout  alpha=1.8  shape=(100,50,128)
+  -> results/rollouts/mlp_Breakout.npz
+[2/12] mlp/Pong  alpha=1.8  shape=(100,50,128)
+  -> results/rollouts/mlp_Pong.npz
+[3/12] mlp/Boxing  alpha=1.8  shape=(100,50,128)
+  -> results/rollouts/mlp_Boxing.npz
+[4/12] iris/Breakout  alpha=1.4  shape=(100,50,84,84,3)
+scripts/run_local.sh: line 28:  8676 Killed                  python scripts/generate_synthetic_rollouts.py

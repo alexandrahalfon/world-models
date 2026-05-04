@@ -1,0 +1,5 @@
+Task 0: model=mlp game=Breakout
+A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+[rollout] Saved mlp_Breakout rollout to results/rollouts/mlp_Breakout.npz
+Done: pred_frames=(2000, 50, 128)

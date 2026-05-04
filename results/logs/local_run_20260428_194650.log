@@ -1,0 +1,138 @@
+Local run started at Tue Apr 28 19:46:50 PDT 2026
+
+──────────────────────────────────────────────────────────
+  STEP 1/4  Generate synthetic rollouts
+  CMD:  python scripts/generate_synthetic_rollouts.py
+  TIME: 19:46:50
+──────────────────────────────────────────────────────────
+[1/12] mlp/Breakout  alpha=1.8  shape=(100,50,128)
+  -> results/rollouts/mlp_Breakout.npz
+[2/12] mlp/Pong  alpha=1.8  shape=(100,50,128)
+  -> results/rollouts/mlp_Pong.npz
+[3/12] mlp/Boxing  alpha=1.8  shape=(100,50,128)
+  -> results/rollouts/mlp_Boxing.npz
+[4/12] iris/Breakout  alpha=1.4  shape=(100,50,84,84,3)
+  -> results/rollouts/iris_Breakout.npz
+[5/12] iris/Pong  alpha=1.4  shape=(100,50,84,84,3)
+  -> results/rollouts/iris_Pong.npz
+[6/12] iris/Boxing  alpha=1.4  shape=(100,50,84,84,3)
+  -> results/rollouts/iris_Boxing.npz
+[7/12] dreamerv3/Breakout  alpha=1.1  shape=(100,50,84,84,3)
+  -> results/rollouts/dreamerv3_Breakout.npz
+[8/12] dreamerv3/Pong  alpha=1.1  shape=(100,50,84,84,3)
+  -> results/rollouts/dreamerv3_Pong.npz
+[9/12] dreamerv3/Boxing  alpha=1.1  shape=(100,50,84,84,3)
+  -> results/rollouts/dreamerv3_Boxing.npz
+[10/12] diamond/Breakout  alpha=0.7  shape=(100,50,84,84,3)
+  -> results/rollouts/diamond_Breakout.npz
+[11/12] diamond/Pong  alpha=0.7  shape=(100,50,84,84,3)
+  -> results/rollouts/diamond_Pong.npz
+[12/12] diamond/Boxing  alpha=0.7  shape=(100,50,84,84,3)
+  -> results/rollouts/diamond_Boxing.npz
+
+[gen_synthetic] Done — 12 rollouts in 43.8s
+[gen_synthetic] Output dir: /Users/mina/dev/GenAIProject/results/rollouts
+
+──────────────────────────────────────────────────────────
+  STEP 2/4  Exp 1 — Error growth curves + power-law fit
+  CMD:  python experiments/exp1_error_growth.py
+  TIME: 19:47:34
+──────────────────────────────────────────────────────────
+Exp1 model×game:   0%|                                 | 0/12 [00:00<?, ?pair/s]Exp1 mlp/Breakout:   0%|                               | 0/12 [00:00<?, ?pair/s]2026-04-28 19:47:36,236 mlp/Breakout: alpha=1.699  k*=13  R2=0.999
+Exp1 mlp/Pong:   0%|                                   | 0/12 [00:00<?, ?pair/s]2026-04-28 19:47:36,243 mlp/Pong: alpha=1.699  k*=13  R2=0.999
+Exp1 mlp/Boxing:   0%|                                 | 0/12 [00:00<?, ?pair/s]2026-04-28 19:47:36,249 mlp/Boxing: alpha=1.701  k*=13  R2=0.999
+Exp1 dreamerv3/Breakout:   0%|                         | 0/12 [00:00<?, ?pair/s]2026-04-28 19:47:37,348 dreamerv3/Breakout: alpha=1.077  k*=26  R2=1.000
+Exp1 dreamerv3/Breakout:  33%|█████▋           | 4/12 [00:01<00:02,  3.47pair/s]Exp1 dreamerv3/Pong:  33%|███████              | 4/12 [00:01<00:02,  3.47pair/s]2026-04-28 19:47:38,168 dreamerv3/Pong: alpha=1.077  k*=26  R2=1.000
+Exp1 dreamerv3/Pong:  42%|████████▊            | 5/12 [00:01<00:02,  2.34pair/s]Exp1 dreamerv3/Boxing:  42%|███████▉           | 5/12 [00:01<00:02,  2.34pair/s]2026-04-28 19:47:38,957 dreamerv3/Boxing: alpha=1.077  k*=26  R2=1.000
+Exp1 dreamerv3/Boxing:  50%|█████████▌         | 6/12 [00:02<00:03,  1.90pair/s]Exp1 iris/Breakout:  50%|███████████           | 6/12 [00:02<00:03,  1.90pair/s]2026-04-28 19:47:39,963 iris/Breakout: alpha=1.359  k*=17  R2=1.000
+Exp1 iris/Breakout:  58%|████████████▊         | 7/12 [00:03<00:03,  1.51pair/s]Exp1 iris/Pong:  58%|███████████████▏          | 7/12 [00:03<00:03,  1.51pair/s]2026-04-28 19:47:40,709 iris/Pong: alpha=1.358  k*=17  R2=1.000
+Exp1 iris/Pong:  67%|█████████████████▎        | 8/12 [00:04<00:02,  1.46pair/s]Exp1 iris/Boxing:  67%|████████████████        | 8/12 [00:04<00:02,  1.46pair/s]2026-04-28 19:47:41,512 iris/Boxing: alpha=1.358  k*=17  R2=1.000
+Exp1 iris/Boxing:  75%|██████████████████      | 9/12 [00:05<00:02,  1.39pair/s]Exp1 diamond/Breakout:  75%|██████████████▎    | 9/12 [00:05<00:02,  1.39pair/s]2026-04-28 19:47:42,121 diamond/Breakout: alpha=0.689  k*=51  R2=1.000
+Exp1 diamond/Breakout:  83%|███████████████   | 10/12 [00:05<00:01,  1.46pair/s]Exp1 diamond/Pong:  83%|██████████████████▎   | 10/12 [00:05<00:01,  1.46pair/s]2026-04-28 19:47:42,819 diamond/Pong: alpha=0.689  k*=51  R2=1.000
+Exp1 diamond/Pong:  92%|████████████████████▏ | 11/12 [00:06<00:00,  1.45pair/s]Exp1 diamond/Boxing:  92%|██████████████████▎ | 11/12 [00:06<00:00,  1.45pair/s]2026-04-28 19:47:43,533 diamond/Boxing: alpha=0.689  k*=51  R2=1.000
+Exp1 diamond/Boxing: 100%|████████████████████| 12/12 [00:07<00:00,  1.43pair/s]Exp1 diamond/Boxing: 100%|████████████████████| 12/12 [00:07<00:00,  1.64pair/s]
+2026-04-28 19:47:43,538 
+=== Alpha / k* table ===
+    model space     game    alpha        c  k_star   fit_r2
+      mlp   ram Breakout 1.699162 4.559952      13 0.999335
+      mlp   ram     Pong 1.699340 4.542944      13 0.999416
+      mlp   ram   Boxing 1.700744 4.532296      13 0.999315
+dreamerv3 pixel Breakout 1.077424 4.074777      26 0.999984
+dreamerv3 pixel     Pong 1.077311 4.075211      26 0.999986
+dreamerv3 pixel   Boxing 1.077388 4.075447      26 0.999985
+     iris pixel Breakout 1.358546 4.169572      17 0.999917
+     iris pixel     Pong 1.358487 4.169729      17 0.999919
+     iris pixel   Boxing 1.358413 4.170309      17 0.999918
+  diamond pixel Breakout 0.689189 4.034118      51 0.999997
+  diamond pixel     Pong 0.689157 4.035917      51 0.999998
+  diamond pixel   Boxing 0.689453 4.032881      51 0.999997
+[visualize] Saved results/exp1/error_curves_Breakout.png
+[visualize] Saved results/exp1/error_curves_pixel_Breakout.png
+[visualize] Saved results/exp1/error_curves_Pong.png
+[visualize] Saved results/exp1/error_curves_pixel_Pong.png
+[visualize] Saved results/exp1/error_curves_Boxing.png
+[visualize] Saved results/exp1/error_curves_pixel_Boxing.png
+2026-04-28 19:47:45,635 Exp 1 completed in 0.2 min
+
+──────────────────────────────────────────────────────────
+  STEP 3/4  Exp 2 — Failure mode frame grids
+  CMD:  python experiments/exp2_failure_modes.py
+  TIME: 19:47:45
+──────────────────────────────────────────────────────────
+Exp2 games:   0%|                                       | 0/3 [00:00<?, ?game/s]
+  Breakout models:   0%|                                  | 0/4 [00:00<?, ?it/s][A2026-04-28 19:47:46,781   [exp2] mlp is RAM-space — skipping frame grid
+2026-04-28 19:47:47,107   [exp2] loaded dreamerv3/Breakout  traj_idx=50
+
+  Breakout models:  50%|█████████████             | 2/4 [00:00<00:00,  6.05it/s][A2026-04-28 19:47:47,441   [exp2] loaded iris/Breakout  traj_idx=50
+
+  Breakout models:  75%|███████████████████▌      | 3/4 [00:00<00:00,  4.25it/s][A2026-04-28 19:47:47,623   [exp2] loaded diamond/Breakout  traj_idx=50
+
+  Breakout models: 100%|██████████████████████████| 4/4 [00:00<00:00,  4.64it/s][A
+                                                                                [AExp2 games:  33%|██████████▎                    | 1/3 [00:01<00:03,  1.60s/game][visualize] Saved results/exp2/comparison_Breakout.png
+[visualize] Saved results/exp2/frames_dreamerv3_Breakout.png
+[visualize] Saved results/exp2/frames_iris_Breakout.png
+[visualize] Saved results/exp2/frames_diamond_Breakout.png
+
+  Pong models:   0%|                                      | 0/4 [00:00<?, ?it/s][A2026-04-28 19:47:48,391   [exp2] mlp is RAM-space — skipping frame grid
+2026-04-28 19:47:48,718   [exp2] loaded dreamerv3/Pong  traj_idx=50
+
+  Pong models:  50%|███████████████               | 2/4 [00:00<00:00,  6.01it/s][A2026-04-28 19:47:49,069   [exp2] loaded iris/Pong  traj_idx=50
+
+  Pong models:  75%|██████████████████████▌       | 3/4 [00:00<00:00,  4.11it/s][A2026-04-28 19:47:49,253   [exp2] loaded diamond/Pong  traj_idx=50
+
+  Pong models: 100%|██████████████████████████████| 4/4 [00:00<00:00,  4.52it/s][A
+                                                                                [AExp2 games:  67%|████████████████████▋          | 2/3 [00:03<00:01,  1.59s/game][visualize] Saved results/exp2/comparison_Pong.png
+[visualize] Saved results/exp2/frames_dreamerv3_Pong.png
+[visualize] Saved results/exp2/frames_iris_Pong.png
+[visualize] Saved results/exp2/frames_diamond_Pong.png
+
+  Boxing models:   0%|                                    | 0/4 [00:00<?, ?it/s][A2026-04-28 19:47:49,962   [exp2] mlp is RAM-space — skipping frame grid
+2026-04-28 19:47:50,292   [exp2] loaded dreamerv3/Boxing  traj_idx=50
+
+  Boxing models:  50%|██████████████              | 2/4 [00:00<00:00,  5.97it/s][A2026-04-28 19:47:50,640   [exp2] loaded iris/Boxing  traj_idx=50
+
+  Boxing models:  75%|█████████████████████       | 3/4 [00:00<00:00,  4.12it/s][A2026-04-28 19:47:50,859   [exp2] loaded diamond/Boxing  traj_idx=50
+
+  Boxing models: 100%|████████████████████████████| 4/4 [00:00<00:00,  4.27it/s][A
+                                                                                [AExp2 games: 100%|███████████████████████████████| 3/3 [00:04<00:00,  1.60s/game]Exp2 games: 100%|███████████████████████████████| 3/3 [00:04<00:00,  1.60s/game]
+[visualize] Saved results/exp2/comparison_Boxing.png
+[visualize] Saved results/exp2/frames_dreamerv3_Boxing.png
+[visualize] Saved results/exp2/frames_iris_Boxing.png
+[visualize] Saved results/exp2/frames_diamond_Boxing.png
+2026-04-28 19:47:51,575 Exp 2 completed in 0.1 min
+
+──────────────────────────────────────────────────────────
+  STEP 4/4  Generate HTML report
+  CMD:  python scripts/generate_report.py
+  TIME: 19:47:51
+──────────────────────────────────────────────────────────
+[report] Generated in 0.0s → /Users/mina/dev/GenAIProject/results/report_20260428_194752.html
+
+============================================================
+  ALL STEPS COMPLETE
+  Finished: Tue Apr 28 19:47:52 PDT 2026
+  Log:      results/logs/local_run_20260428_194650.log
+
+  Report:   /Users/mina/dev/GenAIProject/results/report_20260428_194752.html
+  Open with:  open results/report_20260428_194752.html
+============================================================

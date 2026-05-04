@@ -1,0 +1,28 @@
+2026-05-04 17:57:22,981 mlp/Breakout: alpha=1.253  k*=6  R2=0.780
+2026-05-04 17:57:23,208 mlp/Pong: alpha=0.871  k*=5  R2=0.309
+2026-05-04 17:57:23,470 mlp/Boxing: alpha=1.164  k*=6  R2=0.844
+2026-05-04 17:57:23,471 rollout cache missing for dreamerv3/Breakout: results/rollouts/dreamerv3_Breakout.npz
+2026-05-04 17:57:23,471   Run rollout.py first (or submit run_rollouts.sbatch).
+2026-05-04 17:57:23,472 rollout cache missing for dreamerv3/Pong: results/rollouts/dreamerv3_Pong.npz
+2026-05-04 17:57:23,472   Run rollout.py first (or submit run_rollouts.sbatch).
+2026-05-04 17:57:23,473 rollout cache missing for dreamerv3/Boxing: results/rollouts/dreamerv3_Boxing.npz
+2026-05-04 17:57:23,473   Run rollout.py first (or submit run_rollouts.sbatch).
+2026-05-04 17:57:38,577 iris/Breakout: alpha=0.562  k*=36  R2=0.392
+2026-05-04 17:57:54,596 iris/Pong: alpha=0.103  k*=51  R2=0.437
+2026-05-04 17:58:14,190 iris/Boxing: alpha=0.223  k*=51  R2=0.570
+2026-05-04 17:58:30,049 diamond/Breakout: alpha=0.526  k*=36  R2=0.385
+2026-05-04 17:58:47,141 diamond/Pong: alpha=-0.326  k*=51  R2=0.571
+2026-05-04 17:59:05,840 diamond/Boxing: alpha=0.782  k*=6  R2=0.833
+2026-05-04 17:59:05,871 
+=== Alpha / k* table ===
+  model space     game     alpha          c  k_star   fit_r2
+    mlp   ram Breakout  1.253435  11.792142       6 0.779568
+    mlp   ram     Pong  0.871182  71.108355       5 0.308950
+    mlp   ram   Boxing  1.163962  17.803379       6 0.843726
+   iris pixel Breakout  0.561791   2.832717      36 0.392242
+   iris pixel     Pong  0.102706  24.428538      51 0.437238
+   iris pixel   Boxing  0.222685 134.273212      51 0.570324
+diamond pixel Breakout  0.526408   4.119045      36 0.385242
+diamond pixel     Pong -0.325625 720.977855      51 0.570577
+diamond pixel   Boxing  0.781573  20.355052       6 0.833171
+2026-05-04 17:59:09,293 Exp 1 completed in 1.8 min

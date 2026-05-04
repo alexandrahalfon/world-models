@@ -1,0 +1,5 @@
+Task 2: model=mlp game=Boxing
+A.L.E: Arcade Learning Environment (version 0.11.2+ecc1138)
+[Powered by Stella]
+[rollout] Saved mlp_Boxing rollout to results/rollouts/mlp_Boxing.npz
+Done: pred_frames=(2000, 50, 128)

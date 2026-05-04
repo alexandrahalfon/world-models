@@ -1,0 +1,11 @@
+Local run started at Sat May  2 04:04:55 EDT 2026
+
+──────────────────────────────────────────────────────────
+  STEP 1/4  Generate synthetic rollouts
+  CMD:  python scripts/generate_synthetic_rollouts.py
+  TIME: 04:04:55
+──────────────────────────────────────────────────────────
+Traceback (most recent call last):
+  File "/scratch/aih7261/GenAIProject/scripts/generate_synthetic_rollouts.py", line 18, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'

@@ -1,0 +1,11 @@
+# env_jax: JAX stack — DreamerV3 only
+# Install with: pip install -r requirements_jax.txt
+# See scripts/setup_env_jax.sh for full setup including dreamerv3 repo clone
+
+jax[cuda12_pip]>=0.4.25
+flax>=0.8.0
+optax>=0.2.2
+numpy>=1.26.0
+
+# DreamerV3 repo install (from source — see scripts/setup_env_jax.sh):
+# git clone https://github.com/danijar/dreamerv3 && pip install -e dreamerv3/

@@ -1,0 +1,28 @@
+2026-04-28 19:47:36,236 mlp/Breakout: alpha=1.699  k*=13  R2=0.999
+2026-04-28 19:47:36,243 mlp/Pong: alpha=1.699  k*=13  R2=0.999
+2026-04-28 19:47:36,249 mlp/Boxing: alpha=1.701  k*=13  R2=0.999
+2026-04-28 19:47:37,348 dreamerv3/Breakout: alpha=1.077  k*=26  R2=1.000
+2026-04-28 19:47:38,168 dreamerv3/Pong: alpha=1.077  k*=26  R2=1.000
+2026-04-28 19:47:38,957 dreamerv3/Boxing: alpha=1.077  k*=26  R2=1.000
+2026-04-28 19:47:39,963 iris/Breakout: alpha=1.359  k*=17  R2=1.000
+2026-04-28 19:47:40,709 iris/Pong: alpha=1.358  k*=17  R2=1.000
+2026-04-28 19:47:41,512 iris/Boxing: alpha=1.358  k*=17  R2=1.000
+2026-04-28 19:47:42,121 diamond/Breakout: alpha=0.689  k*=51  R2=1.000
+2026-04-28 19:47:42,819 diamond/Pong: alpha=0.689  k*=51  R2=1.000
+2026-04-28 19:47:43,533 diamond/Boxing: alpha=0.689  k*=51  R2=1.000
+2026-04-28 19:47:43,538 
+=== Alpha / k* table ===
+    model space     game    alpha        c  k_star   fit_r2
+      mlp   ram Breakout 1.699162 4.559952      13 0.999335
+      mlp   ram     Pong 1.699340 4.542944      13 0.999416
+      mlp   ram   Boxing 1.700744 4.532296      13 0.999315
+dreamerv3 pixel Breakout 1.077424 4.074777      26 0.999984
+dreamerv3 pixel     Pong 1.077311 4.075211      26 0.999986
+dreamerv3 pixel   Boxing 1.077388 4.075447      26 0.999985
+     iris pixel Breakout 1.358546 4.169572      17 0.999917
+     iris pixel     Pong 1.358487 4.169729      17 0.999919
+     iris pixel   Boxing 1.358413 4.170309      17 0.999918
+  diamond pixel Breakout 0.689189 4.034118      51 0.999997
+  diamond pixel     Pong 0.689157 4.035917      51 0.999998
+  diamond pixel   Boxing 0.689453 4.032881      51 0.999997
+2026-04-28 19:47:45,635 Exp 1 completed in 0.2 min

@@ -1,0 +1,22 @@
+games: [Breakout, Pong, Boxing]
+horizon_K: 50
+n_trajectories: 2000           # 2000 minimum for reliable FID estimates
+k_star_multiplier: 3          # validated via IRIS Breakout pilot (alpha=0.534, R2=0.977, k*=27)
+                               # MUST be validated with a pilot run before full SLURM array
+fid_horizons: [5, 10, 20, 30, 50]   # k=1 excluded: near-identical frames → unstable FID
+seed: 42
+
+models:
+  mlp:
+    space: ram                 # 128-byte RAM state — alpha NOT comparable to pixel models
+    hidden_dim: 256
+    n_layers: 3
+  dreamerv3:
+    space: pixel               # decoded back to 84x84x3 by dreamerv3_rollout.py
+    checkpoint: checkpoints/dreamerv3/
+  iris:
+    space: pixel
+    checkpoint: checkpoints/iris/
+  diamond:
+    space: pixel
+    checkpoint: checkpoints/diamond/

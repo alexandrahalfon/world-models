@@ -1,0 +1,192 @@
+=== exp1 ===
+Exp1 model×game:   0%|                                 | 0/12 [00:00<?, ?pair/s]Exp1 mlp/Breakout:   0%|                               | 0/12 [00:00<?, ?pair/s]2026-05-03 20:12:05,684 mlp/Breakout: alpha=1.248  k*=6  R2=0.776
+Exp1 mlp/Breakout:   8%|█▉                     | 1/12 [00:00<00:02,  4.19pair/s]Exp1 mlp/Pong:   8%|██▎                        | 1/12 [00:00<00:02,  4.19pair/s]2026-05-03 20:12:05,924 mlp/Pong: alpha=0.882  k*=5  R2=0.309
+Exp1 mlp/Pong:  17%|████▌                      | 2/12 [00:00<00:02,  4.17pair/s]Exp1 mlp/Boxing:  17%|████▏                    | 2/12 [00:00<00:02,  4.17pair/s]2026-05-03 20:12:06,195 mlp/Boxing: alpha=1.158  k*=6  R2=0.841
+Exp1 mlp/Boxing:  25%|██████▎                  | 3/12 [00:00<00:02,  3.94pair/s]Exp1 dreamerv3/Breakout:  25%|████▎            | 3/12 [00:00<00:02,  3.94pair/s]2026-05-03 20:12:06,196 rollout cache missing for dreamerv3/Breakout: results/rollouts/dreamerv3_Breakout.npz
+2026-05-03 20:12:06,196   Run rollout.py first (or submit run_rollouts.sbatch).
+Exp1 dreamerv3/Pong:  25%|█████▎               | 3/12 [00:00<00:02,  3.94pair/s]2026-05-03 20:12:06,196 rollout cache missing for dreamerv3/Pong: results/rollouts/dreamerv3_Pong.npz
+2026-05-03 20:12:06,196   Run rollout.py first (or submit run_rollouts.sbatch).
+Exp1 dreamerv3/Boxing:  25%|████▊              | 3/12 [00:00<00:02,  3.94pair/s]2026-05-03 20:12:06,197 rollout cache missing for dreamerv3/Boxing: results/rollouts/dreamerv3_Boxing.npz
+2026-05-03 20:12:06,197   Run rollout.py first (or submit run_rollouts.sbatch).
+Exp1 iris/Breakout:  25%|█████▌                | 3/12 [00:00<00:02,  3.94pair/s]2026-05-03 20:12:22,902 iris/Breakout: alpha=0.565  k*=36  R2=0.389
+Exp1 iris/Breakout:  58%|████████████▊         | 7/12 [00:17<00:15,  3.09s/pair]Exp1 iris/Pong:  58%|███████████████▏          | 7/12 [00:17<00:15,  3.09s/pair]2026-05-03 20:12:39,975 iris/Pong: alpha=0.103  k*=51  R2=0.437
+Exp1 iris/Pong:  67%|█████████████████▎        | 8/12 [00:34<00:23,  5.96s/pair]Exp1 iris/Boxing:  67%|████████████████        | 8/12 [00:34<00:23,  5.96s/pair]2026-05-03 20:13:00,216 iris/Boxing: alpha=0.223  k*=51  R2=0.570
+Exp1 iris/Boxing:  75%|██████████████████      | 9/12 [00:54<00:27,  9.20s/pair]Exp1 diamond/Breakout:  75%|██████████████▎    | 9/12 [00:54<00:27,  9.20s/pair]2026-05-03 20:13:16,990 diamond/Breakout: alpha=0.526  k*=36  R2=0.370
+Exp1 diamond/Breakout:  83%|███████████████   | 10/12 [01:11<00:22, 11.05s/pair]Exp1 diamond/Pong:  83%|██████████████████▎   | 10/12 [01:11<00:22, 11.05s/pair]2026-05-03 20:13:35,129 diamond/Pong: alpha=-0.284  k*=51  R2=0.497
+Exp1 diamond/Pong:  92%|████████████████████▏ | 11/12 [01:29<00:12, 12.89s/pair]Exp1 diamond/Boxing:  92%|██████████████████▎ | 11/12 [01:29<00:12, 12.89s/pair]2026-05-03 20:13:54,520 diamond/Boxing: alpha=0.782  k*=6  R2=0.833
+Exp1 diamond/Boxing: 100%|████████████████████| 12/12 [01:49<00:00, 14.64s/pair]Exp1 diamond/Boxing: 100%|████████████████████| 12/12 [01:49<00:00,  9.09s/pair]
+2026-05-03 20:13:54,539 
+=== Alpha / k* table ===
+  model space     game     alpha          c  k_star   fit_r2
+    mlp   ram Breakout  1.247748  11.823879       6 0.776219
+    mlp   ram     Pong  0.881906  68.140725       5 0.309400
+    mlp   ram   Boxing  1.158479  17.833391       6 0.841454
+   iris pixel Breakout  0.564976   2.777852      36 0.389354
+   iris pixel     Pong  0.102634  24.426261      51 0.437098
+   iris pixel   Boxing  0.222784 134.196040      51 0.570252
+diamond pixel Breakout  0.526455   4.020131      36 0.369774
+diamond pixel     Pong -0.284066 606.045554      51 0.497344
+diamond pixel   Boxing  0.781959  20.326041       6 0.833124
+[visualize] Saved results/exp1/error_curves_Breakout.png
+[visualize] Saved results/exp1/error_curves_pixel_Breakout.png
+[visualize] Saved results/exp1/error_curves_Pong.png
+[visualize] Saved results/exp1/error_curves_pixel_Pong.png
+[visualize] Saved results/exp1/error_curves_Boxing.png
+[visualize] Saved results/exp1/error_curves_pixel_Boxing.png
+2026-05-03 20:13:57,831 Exp 1 completed in 1.9 min
+=== exp2 ===
+Exp2 games:   0%|                                       | 0/3 [00:00<?, ?game/s]
+  Breakout models:   0%|                                  | 0/4 [00:00<?, ?it/s][A2026-05-03 20:13:59,667   [exp2] mlp is RAM-space — skipping frame grid
+2026-05-03 20:13:59,667 rollout cache missing for dreamerv3/Breakout
+2026-05-03 20:14:04,281   [exp2] loaded iris/Breakout  traj_idx=1000
+
+  Breakout models:  75%|███████████████████▌      | 3/4 [00:04<00:01,  1.56s/it][A2026-05-03 20:14:08,713   [exp2] loaded diamond/Breakout  traj_idx=1000
+
+  Breakout models: 100%|██████████████████████████| 4/4 [00:09<00:00,  2.49s/it][A
+                                                                                [A[visualize] Saved results/exp2/comparison_Breakout.png
+[visualize] Saved results/exp2/frames_iris_Breakout.png
+[visualize] Saved results/exp2/frames_diamond_Breakout.png
+Exp2 games:  33%|██████████▎                    | 1/3 [00:09<00:19,  9.96s/game]
+  Pong models:   0%|                                      | 0/4 [00:00<?, ?it/s][A2026-05-03 20:14:09,642   [exp2] mlp is RAM-space — skipping frame grid
+2026-05-03 20:14:09,642 rollout cache missing for dreamerv3/Pong
+2026-05-03 20:14:14,391   [exp2] loaded iris/Pong  traj_idx=1000
+
+  Pong models:  75%|██████████████████████▌       | 3/4 [00:04<00:01,  1.61s/it][A2026-05-03 20:14:19,419   [exp2] loaded diamond/Pong  traj_idx=1000
+
+  Pong models: 100%|██████████████████████████████| 4/4 [00:09<00:00,  2.71s/it][A
+                                                                                [A[visualize] Saved results/exp2/comparison_Pong.png
+[visualize] Saved results/exp2/frames_iris_Pong.png
+[visualize] Saved results/exp2/frames_diamond_Pong.png
+Exp2 games:  67%|████████████████████▋          | 2/3 [00:20<00:10, 10.37s/game]
+  Boxing models:   0%|                                    | 0/4 [00:00<?, ?it/s][A2026-05-03 20:14:20,317   [exp2] mlp is RAM-space — skipping frame grid
+
+  Boxing models:  25%|███████                     | 1/4 [00:00<00:00,  9.13it/s][A2026-05-03 20:14:20,317 rollout cache missing for dreamerv3/Boxing
+2026-05-03 20:14:26,525   [exp2] loaded iris/Boxing  traj_idx=1000
+
+  Boxing models:  75%|█████████████████████       | 3/4 [00:06<00:02,  2.33s/it][A2026-05-03 20:14:32,201   [exp2] loaded diamond/Boxing  traj_idx=1000
+
+  Boxing models: 100%|████████████████████████████| 4/4 [00:11<00:00,  3.49s/it][A
+                                                                                [A[visualize] Saved results/exp2/comparison_Boxing.png
+[visualize] Saved results/exp2/frames_iris_Boxing.png
+[visualize] Saved results/exp2/frames_diamond_Boxing.png
+Exp2 games: 100%|███████████████████████████████| 3/3 [00:33<00:00, 11.49s/game]Exp2 games: 100%|███████████████████████████████| 3/3 [00:33<00:00, 11.15s/game]
+2026-05-03 20:14:33,040 Exp 2 completed in 0.6 min
+=== exp3 ===
+[exp3] Skipping mlp (RAM space — not comparable with pixel FID)
+[exp3] WARNING: rollout cache missing for dreamerv3/Breakout
+[exp3] WARNING: rollout cache missing for dreamerv3/Pong
+[exp3] WARNING: rollout cache missing for dreamerv3/Boxing
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] iris/Breakout k=5: FID=6.23, KL=6.8988
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] iris/Breakout k=10: FID=4.50, KL=2.6959
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] iris/Breakout k=20: FID=10.15, KL=2.2284
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] iris/Breakout k=30: FID=8.71, KL=3.1408
+[exp3] iris/Breakout k=50: FID=13.39, KL=1.4768
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] iris/Pong k=5: FID=27.47, KL=5.6994
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] iris/Pong k=10: FID=24.59, KL=3.6265
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] iris/Pong k=20: FID=38.07, KL=0.3263
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] iris/Pong k=30: FID=42.92, KL=0.5893
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] iris/Pong k=50: FID=57.36, KL=1.8052
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] iris/Boxing k=5: FID=14.42, KL=27.6741
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] iris/Boxing k=10: FID=14.51, KL=27.6420
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] iris/Boxing k=20: FID=16.99, KL=2.1343
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] iris/Boxing k=30: FID=7.83, KL=0.6936
+[exp3] iris/Boxing k=50: FID=5.86, KL=0.1275
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] diamond/Breakout k=5: FID=12.56, KL=19.8315
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] diamond/Breakout k=10: FID=6.30, KL=8.0557
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] diamond/Breakout k=20: FID=18.24, KL=10.7875
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] diamond/Breakout k=30: FID=13.62, KL=6.9607
+[exp3] diamond/Breakout k=50: FID=25.25, KL=5.5300
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] diamond/Pong k=5: FID=89.00, KL=3.3660
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] diamond/Pong k=10: FID=84.31, KL=2.7449
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] diamond/Pong k=20: FID=87.43, KL=1.3752
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] diamond/Pong k=30: FID=81.42, KL=3.9309
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] diamond/Pong k=50: FID=87.51, KL=4.1211
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] diamond/Boxing k=5: FID=8.72, KL=27.6396
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] diamond/Boxing k=10: FID=17.03, KL=27.7090
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] diamond/Boxing k=20: FID=27.96, KL=4.9986
+/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/pytorch_fid/fid_score.py:188: LinAlgWarning: Matrix is singular. The result might be inaccurate or the array might not have a square root.
+  covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+[exp3] diamond/Boxing k=30: FID=15.20, KL=1.1284
+[exp3] diamond/Boxing k=50: FID=14.30, KL=0.1722
+Traceback (most recent call last):
+  File "/scratch/aih7261/GenAIProject/experiments/exp3_distributional.py", line 94, in <module>
+    main()
+  File "/scratch/aih7261/GenAIProject/experiments/exp3_distributional.py", line 84, in main
+    visualize.plot_distributional_divergence(
+  File "/scratch/aih7261/GenAIProject/experiments/../src/visualize.py", line 113, in plot_distributional_divergence
+    ax1.plot(horizons, vals, label=MODEL_LABELS.get(model, model), color=MODEL_COLORS.get(model), marker="o")
+  File "/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/matplotlib/axes/_axes.py", line 1777, in plot
+    lines = [*self._get_lines(self, *args, data=data, **kwargs)]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/matplotlib/axes/_base.py", line 297, in __call__
+    yield from self._plot_args(
+               ^^^^^^^^^^^^^^^^
+  File "/ext3/miniconda3/envs/env_torch/lib/python3.11/site-packages/matplotlib/axes/_base.py", line 494, in _plot_args
+    raise ValueError(f"x and y must have same first dimension, but "
+ValueError: x and y must have same first dimension, but have shapes (5,) and (0,)
+=== generate_report ===
+[report] Generated in 0.2s → /scratch/aih7261/GenAIProject/results/report_20260503_202932.html
+=== Done ===
+Files in results/exp3:
+total 24
+drwxr-xr-x. 2 aih7261 aih7261   0 May  3 20:29 .
+drwxr-xr-x. 7 aih7261 aih7261   0 May  3 20:29 ..
+-rw-r--r--. 1 aih7261 aih7261 221 May  3 20:29 divergence_diamond_Boxing.csv
+-rw-r--r--. 1 aih7261 aih7261 220 May  3 20:24 divergence_diamond_Breakout.csv
+-rw-r--r--. 1 aih7261 aih7261 214 May  3 20:26 divergence_diamond_Pong.csv
+-rw-r--r--. 1 aih7261 aih7261 222 May  3 20:22 divergence_iris_Boxing.csv
+-rw-r--r--. 1 aih7261 aih7261 217 May  3 20:16 divergence_iris_Breakout.csv
+-rw-r--r--. 1 aih7261 aih7261 218 May  3 20:19 divergence_iris_Pong.csv
+Report:
+-rw-r--r--. 1 aih7261 aih7261 1173566 May  3 08:35 /scratch/aih7261/GenAIProject/results/report_20260503_083528.html
+-rw-r--r--. 1 aih7261 aih7261 1393220 May  3 20:29 /scratch/aih7261/GenAIProject/results/report_20260503_202932.html
