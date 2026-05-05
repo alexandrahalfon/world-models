@@ -128,7 +128,7 @@ def build_report() -> str:
     # ── Section 4: Distributional divergence (exp3 — may be skipped locally) ─
     div_html = ""
     for game in GAMES:
-        p = os.path.join(RESULTS_DIR, "exp3", f"divergence_{game}.png")
+        p = os.path.join(RESULTS_DIR, "exp3", f"distributional_{game}.png")
         if os.path.exists(p):
             div_html += _img_tag(p, f"{game} FID + PCA-KL")
         else:
