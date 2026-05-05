@@ -1,0 +1,29 @@
+2026-05-04 20:17:19,076 Power-law fit window: k=5..50 (k_star_multiplier=3)
+2026-05-04 20:17:19,299 mlp/Breakout: alpha=0.690  k*=20  R2=0.574  (fit on k>=5)
+2026-05-04 20:17:19,514 mlp/Pong: alpha=-0.493  k*=51  R2=0.349  (fit on k>=5)
+2026-05-04 20:17:19,772 mlp/Boxing: alpha=1.208  k*=14  R2=0.734  (fit on k>=5)
+2026-05-04 20:17:19,773 rollout cache missing for dreamerv3/Breakout: results/rollouts/dreamerv3_Breakout.npz
+2026-05-04 20:17:19,773   Run rollout.py first (or submit run_rollouts.sbatch).
+2026-05-04 20:17:19,774 rollout cache missing for dreamerv3/Pong: results/rollouts/dreamerv3_Pong.npz
+2026-05-04 20:17:19,774   Run rollout.py first (or submit run_rollouts.sbatch).
+2026-05-04 20:17:19,774 rollout cache missing for dreamerv3/Boxing: results/rollouts/dreamerv3_Boxing.npz
+2026-05-04 20:17:19,774   Run rollout.py first (or submit run_rollouts.sbatch).
+2026-05-04 20:17:34,562 iris/Breakout: alpha=0.856  k*=36  R2=0.435  (fit on k>=5)
+2026-05-04 20:17:49,644 iris/Pong: alpha=0.154  k*=51  R2=0.481  (fit on k>=5)
+2026-05-04 20:18:07,566 iris/Boxing: alpha=0.299  k*=51  R2=0.550  (fit on k>=5)
+2026-05-04 20:18:22,414 diamond/Breakout: alpha=0.764  k*=36  R2=0.393  (fit on k>=5)
+2026-05-04 20:18:38,479 diamond/Pong: alpha=-0.048  k*=51  R2=0.252  (fit on k>=5)
+2026-05-04 20:18:55,461 diamond/Boxing: alpha=0.563  k*=23  R2=0.676  (fit on k>=5)
+2026-05-04 20:18:55,472 
+=== Alpha / k* table ===
+  model space     game     alpha           c  k_star   fit_r2  k_fit_min
+    mlp   ram Breakout  0.690369   75.622622      20 0.573899          5
+    mlp   ram     Pong -0.493018 6427.536285      51 0.348916          5
+    mlp   ram   Boxing  1.208237   15.401601      14 0.734283          5
+   iris pixel Breakout  0.856334    1.070560      36 0.435037          5
+   iris pixel     Pong  0.153942   20.637314      51 0.480834          5
+   iris pixel   Boxing  0.298673  104.323192      51 0.549558          5
+diamond pixel Breakout  0.764166    1.875075      36 0.393343          5
+diamond pixel     Pong -0.048113  289.946866      51 0.252282          5
+diamond pixel   Boxing  0.562581   42.325840      23 0.675709          5
+2026-05-04 20:18:56,820 Exp 1 completed in 1.6 min

@@ -1,0 +1,13 @@
+2026-05-04 20:18:58,682   [exp2] mlp is RAM-space — skipping frame grid
+2026-05-04 20:18:58,683 rollout cache missing for dreamerv3/Breakout
+2026-05-04 20:19:03,302   [exp2] loaded iris/Breakout  traj_idx=1000
+2026-05-04 20:19:07,752   [exp2] loaded diamond/Breakout  traj_idx=1000
+2026-05-04 20:19:08,687   [exp2] mlp is RAM-space — skipping frame grid
+2026-05-04 20:19:08,687 rollout cache missing for dreamerv3/Pong
+2026-05-04 20:19:13,428   [exp2] loaded iris/Pong  traj_idx=1000
+2026-05-04 20:19:18,442   [exp2] loaded diamond/Pong  traj_idx=1000
+2026-05-04 20:19:19,345   [exp2] mlp is RAM-space — skipping frame grid
+2026-05-04 20:19:19,345 rollout cache missing for dreamerv3/Boxing
+2026-05-04 20:19:25,562   [exp2] loaded iris/Boxing  traj_idx=1000
+2026-05-04 20:19:31,241   [exp2] loaded diamond/Boxing  traj_idx=1000
+2026-05-04 20:19:32,098 Exp 2 completed in 0.6 min

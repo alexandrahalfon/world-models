@@ -1,0 +1,144 @@
+=== exp1 ===
+2026-05-04 20:17:19,076 Power-law fit window: k=5..50 (k_star_multiplier=3)
+Exp1 model×game:   0%|                                 | 0/12 [00:00<?, ?pair/s]Exp1 mlp/Breakout:   0%|                               | 0/12 [00:00<?, ?pair/s]2026-05-04 20:17:19,299 mlp/Breakout: alpha=0.690  k*=20  R2=0.574  (fit on k>=5)
+Exp1 mlp/Breakout:   8%|█▉                     | 1/12 [00:00<00:02,  4.62pair/s]Exp1 mlp/Pong:   8%|██▎                        | 1/12 [00:00<00:02,  4.62pair/s]2026-05-04 20:17:19,514 mlp/Pong: alpha=-0.493  k*=51  R2=0.349  (fit on k>=5)
+Exp1 mlp/Pong:  17%|████▌                      | 2/12 [00:00<00:02,  4.64pair/s]Exp1 mlp/Boxing:  17%|████▏                    | 2/12 [00:00<00:02,  4.64pair/s]2026-05-04 20:17:19,772 mlp/Boxing: alpha=1.208  k*=14  R2=0.734  (fit on k>=5)
+Exp1 mlp/Boxing:  25%|██████▎                  | 3/12 [00:00<00:02,  4.26pair/s]Exp1 dreamerv3/Breakout:  25%|████▎            | 3/12 [00:00<00:02,  4.26pair/s]2026-05-04 20:17:19,773 rollout cache missing for dreamerv3/Breakout: results/rollouts/dreamerv3_Breakout.npz
+2026-05-04 20:17:19,773   Run rollout.py first (or submit run_rollouts.sbatch).
+Exp1 dreamerv3/Pong:  25%|█████▎               | 3/12 [00:00<00:02,  4.26pair/s]2026-05-04 20:17:19,774 rollout cache missing for dreamerv3/Pong: results/rollouts/dreamerv3_Pong.npz
+2026-05-04 20:17:19,774   Run rollout.py first (or submit run_rollouts.sbatch).
+Exp1 dreamerv3/Boxing:  25%|████▊              | 3/12 [00:00<00:02,  4.26pair/s]2026-05-04 20:17:19,774 rollout cache missing for dreamerv3/Boxing: results/rollouts/dreamerv3_Boxing.npz
+2026-05-04 20:17:19,774   Run rollout.py first (or submit run_rollouts.sbatch).
+Exp1 iris/Breakout:  25%|█████▌                | 3/12 [00:00<00:02,  4.26pair/s]2026-05-04 20:17:34,562 iris/Breakout: alpha=0.856  k*=36  R2=0.435  (fit on k>=5)
+Exp1 iris/Breakout:  58%|████████████▊         | 7/12 [00:15<00:13,  2.74s/pair]Exp1 iris/Pong:  58%|███████████████▏          | 7/12 [00:15<00:13,  2.74s/pair]2026-05-04 20:17:49,644 iris/Pong: alpha=0.154  k*=51  R2=0.481  (fit on k>=5)
+Exp1 iris/Pong:  67%|█████████████████▎        | 8/12 [00:30<00:21,  5.27s/pair]Exp1 iris/Boxing:  67%|████████████████        | 8/12 [00:30<00:21,  5.27s/pair]2026-05-04 20:18:07,566 iris/Boxing: alpha=0.299  k*=51  R2=0.550  (fit on k>=5)
+Exp1 iris/Boxing:  75%|██████████████████      | 9/12 [00:48<00:24,  8.14s/pair]Exp1 diamond/Breakout:  75%|██████████████▎    | 9/12 [00:48<00:24,  8.14s/pair]2026-05-04 20:18:22,414 diamond/Breakout: alpha=0.764  k*=36  R2=0.393  (fit on k>=5)
+Exp1 diamond/Breakout:  83%|███████████████   | 10/12 [01:03<00:19,  9.78s/pair]Exp1 diamond/Pong:  83%|██████████████████▎   | 10/12 [01:03<00:19,  9.78s/pair]2026-05-04 20:18:38,479 diamond/Pong: alpha=-0.048  k*=51  R2=0.252  (fit on k>=5)
+Exp1 diamond/Pong:  92%|████████████████████▏ | 11/12 [01:19<00:11, 11.41s/pair]Exp1 diamond/Boxing:  92%|██████████████████▎ | 11/12 [01:19<00:11, 11.41s/pair]2026-05-04 20:18:55,461 diamond/Boxing: alpha=0.563  k*=23  R2=0.676  (fit on k>=5)
+Exp1 diamond/Boxing: 100%|████████████████████| 12/12 [01:36<00:00, 12.91s/pair]Exp1 diamond/Boxing: 100%|████████████████████| 12/12 [01:36<00:00,  8.03s/pair]
+2026-05-04 20:18:55,472 
+=== Alpha / k* table ===
+  model space     game     alpha           c  k_star   fit_r2  k_fit_min
+    mlp   ram Breakout  0.690369   75.622622      20 0.573899          5
+    mlp   ram     Pong -0.493018 6427.536285      51 0.348916          5
+    mlp   ram   Boxing  1.208237   15.401601      14 0.734283          5
+   iris pixel Breakout  0.856334    1.070560      36 0.435037          5
+   iris pixel     Pong  0.153942   20.637314      51 0.480834          5
+   iris pixel   Boxing  0.298673  104.323192      51 0.549558          5
+diamond pixel Breakout  0.764166    1.875075      36 0.393343          5
+diamond pixel     Pong -0.048113  289.946866      51 0.252282          5
+diamond pixel   Boxing  0.562581   42.325840      23 0.675709          5
+[visualize] Saved results/exp1/error_curves_Breakout.png
+[visualize] Saved results/exp1/error_curves_pixel_Breakout.png
+[visualize] Saved results/exp1/error_curves_Pong.png
+[visualize] Saved results/exp1/error_curves_pixel_Pong.png
+[visualize] Saved results/exp1/error_curves_Boxing.png
+[visualize] Saved results/exp1/error_curves_pixel_Boxing.png
+2026-05-04 20:18:56,820 Exp 1 completed in 1.6 min
+=== exp2 ===
+Exp2 games:   0%|                                       | 0/3 [00:00<?, ?game/s]
+  Breakout models:   0%|                                  | 0/4 [00:00<?, ?it/s][A2026-05-04 20:18:58,682   [exp2] mlp is RAM-space — skipping frame grid
+2026-05-04 20:18:58,683 rollout cache missing for dreamerv3/Breakout
+2026-05-04 20:19:03,302   [exp2] loaded iris/Breakout  traj_idx=1000
+
+  Breakout models:  75%|███████████████████▌      | 3/4 [00:04<00:01,  1.57s/it][A2026-05-04 20:19:07,752   [exp2] loaded diamond/Breakout  traj_idx=1000
+
+  Breakout models: 100%|██████████████████████████| 4/4 [00:09<00:00,  2.50s/it][A
+                                                                                [A[visualize] Saved results/exp2/comparison_Breakout.png
+[visualize] Saved results/exp2/frames_iris_Breakout.png
+[visualize] Saved results/exp2/frames_diamond_Breakout.png
+Exp2 games:  33%|██████████▎                    | 1/3 [00:09<00:19,  9.99s/game]
+  Pong models:   0%|                                      | 0/4 [00:00<?, ?it/s][A2026-05-04 20:19:08,687   [exp2] mlp is RAM-space — skipping frame grid
+2026-05-04 20:19:08,687 rollout cache missing for dreamerv3/Pong
+2026-05-04 20:19:13,428   [exp2] loaded iris/Pong  traj_idx=1000
+
+  Pong models:  75%|██████████████████████▌       | 3/4 [00:04<00:01,  1.61s/it][A2026-05-04 20:19:18,442   [exp2] loaded diamond/Pong  traj_idx=1000
+
+  Pong models: 100%|██████████████████████████████| 4/4 [00:09<00:00,  2.71s/it][A
+                                                                                [A[visualize] Saved results/exp2/comparison_Pong.png
+[visualize] Saved results/exp2/frames_iris_Pong.png
+[visualize] Saved results/exp2/frames_diamond_Pong.png
+Exp2 games:  67%|████████████████████▋          | 2/3 [00:20<00:10, 10.37s/game]
+  Boxing models:   0%|                                    | 0/4 [00:00<?, ?it/s][A2026-05-04 20:19:19,345   [exp2] mlp is RAM-space — skipping frame grid
+
+  Boxing models:  25%|███████                     | 1/4 [00:00<00:00,  9.21it/s][A2026-05-04 20:19:19,345 rollout cache missing for dreamerv3/Boxing
+2026-05-04 20:19:25,562   [exp2] loaded iris/Boxing  traj_idx=1000
+
+  Boxing models:  75%|█████████████████████       | 3/4 [00:06<00:02,  2.33s/it][A2026-05-04 20:19:31,241   [exp2] loaded diamond/Boxing  traj_idx=1000
+
+  Boxing models: 100%|████████████████████████████| 4/4 [00:12<00:00,  3.49s/it][A
+                                                                                [A[visualize] Saved results/exp2/comparison_Boxing.png
+[visualize] Saved results/exp2/frames_iris_Boxing.png
+[visualize] Saved results/exp2/frames_diamond_Boxing.png
+Exp2 games: 100%|███████████████████████████████| 3/3 [00:33<00:00, 11.51s/game]Exp2 games: 100%|███████████████████████████████| 3/3 [00:33<00:00, 11.16s/game]
+2026-05-04 20:19:32,098 Exp 2 completed in 0.6 min
+=== exp3 ===
+[exp3] Skipping mlp (RAM space — not comparable with pixel FID)
+[exp3] WARNING: rollout cache missing for dreamerv3/Breakout
+[exp3] WARNING: rollout cache missing for dreamerv3/Pong
+[exp3] WARNING: rollout cache missing for dreamerv3/Boxing
+[exp3] iris/Breakout: PCA basis fit on 8000 pooled true frames -> 18 dims (95.4% var)
+[exp3] iris/Breakout k=5: FID=6.22, KL=8.7703
+[exp3] iris/Breakout k=10: FID=4.49, KL=1.7398
+[exp3] iris/Breakout k=20: FID=10.14, KL=1.5762
+[exp3] iris/Breakout k=30: FID=8.70, KL=2.6778
+[exp3] iris/Breakout k=50: FID=13.37, KL=1.5154
+[exp3] iris/Pong: PCA basis fit on 8000 pooled true frames -> 13 dims (95.2% var)
+[exp3] iris/Pong k=5: FID=27.46, KL=2.5667
+[exp3] iris/Pong k=10: FID=24.58, KL=2.4470
+[exp3] iris/Pong k=20: FID=38.05, KL=2.1319
+[exp3] iris/Pong k=30: FID=42.89, KL=5.1191
+[exp3] iris/Pong k=50: FID=57.33, KL=4.0063
+[exp3] iris/Boxing: PCA basis fit on 8000 pooled true frames -> 58 dims (95.0% var)
+[exp3] iris/Boxing k=5: FID=14.37, KL=4.6935
+[exp3] iris/Boxing k=10: FID=14.46, KL=4.6262
+[exp3] iris/Boxing k=20: FID=16.95, KL=1.2697
+[exp3] iris/Boxing k=30: FID=7.82, KL=0.4841
+[exp3] iris/Boxing k=50: FID=5.85, KL=0.1769
+[exp3] diamond/Breakout: PCA basis fit on 8000 pooled true frames -> 18 dims (95.4% var)
+[exp3] diamond/Breakout k=5: FID=12.56, KL=18.3934
+[exp3] diamond/Breakout k=10: FID=6.30, KL=7.8702
+[exp3] diamond/Breakout k=20: FID=18.23, KL=7.0637
+[exp3] diamond/Breakout k=30: FID=13.62, KL=6.8163
+[exp3] diamond/Breakout k=50: FID=25.24, KL=7.4326
+[exp3] diamond/Pong: PCA basis fit on 8000 pooled true frames -> 13 dims (95.2% var)
+[exp3] diamond/Pong k=5: FID=88.97, KL=4.8438
+[exp3] diamond/Pong k=10: FID=84.27, KL=2.4291
+[exp3] diamond/Pong k=20: FID=87.38, KL=5.2075
+[exp3] diamond/Pong k=30: FID=81.35, KL=9.3461
+[exp3] diamond/Pong k=50: FID=87.44, KL=3.7264
+[exp3] diamond/Boxing: PCA basis fit on 8000 pooled true frames -> 58 dims (95.0% var)
+[exp3] diamond/Boxing k=5: FID=8.71, KL=24.5275
+[exp3] diamond/Boxing k=10: FID=17.01, KL=15.4913
+[exp3] diamond/Boxing k=20: FID=27.93, KL=2.5108
+[exp3] diamond/Boxing k=30: FID=15.19, KL=0.6306
+[exp3] diamond/Boxing k=50: FID=14.29, KL=0.2346
+[visualize] Saved results/exp3/distributional_Breakout.png
+[visualize] Saved results/exp3/distributional_Pong.png
+[visualize] Saved results/exp3/distributional_Boxing.png
+=== generate_report ===
+[report] Generated in 0.2s → /scratch/aih7261/GenAIProject/results/report_20260504_203242.html
+=== Done ===
+Files in results/exp3:
+total 1312
+drwxr-xr-x. 2 aih7261 aih7261      0 May  3 20:57 .
+drwxr-xr-x. 7 aih7261 aih7261      0 May  4 20:32 ..
+-rw-r--r--. 1 aih7261 aih7261  84109 May  4 20:32 distributional_Boxing.png
+-rw-r--r--. 1 aih7261 aih7261  91287 May  4 20:32 distributional_Breakout.png
+-rw-r--r--. 1 aih7261 aih7261  97784 May  4 20:32 distributional_Pong.png
+-rw-r--r--. 1 aih7261 aih7261    221 May  4 20:32 divergence_diamond_Boxing.csv
+-rw-r--r--. 1 aih7261 aih7261    219 May  4 20:28 divergence_diamond_Breakout.csv
+-rw-r--r--. 1 aih7261 aih7261    215 May  4 20:30 divergence_diamond_Pong.csv
+-rw-r--r--. 1 aih7261 aih7261    217 May  4 20:26 divergence_iris_Boxing.csv
+-rw-r--r--. 1 aih7261 aih7261    221 May  4 20:22 divergence_iris_Breakout.csv
+-rw-r--r--. 1 aih7261 aih7261    216 May  4 20:24 divergence_iris_Pong.csv
+-rw-r--r--. 1 aih7261 aih7261 331658 May  3 20:57 pca_scatter_diamond_Boxing_k50.png
+-rw-r--r--. 1 aih7261 aih7261  81210 May  3 20:57 pca_scatter_diamond_Breakout_k50.png
+-rw-r--r--. 1 aih7261 aih7261  67042 May  3 20:57 pca_scatter_diamond_Pong_k50.png
+-rw-r--r--. 1 aih7261 aih7261 349206 May  3 20:57 pca_scatter_iris_Boxing_k50.png
+-rw-r--r--. 1 aih7261 aih7261 120444 May  3 20:57 pca_scatter_iris_Breakout_k50.png
+-rw-r--r--. 1 aih7261 aih7261  80616 May  3 20:57 pca_scatter_iris_Pong_k50.png
+Report:
+-rw-r--r--. 1 aih7261 aih7261 1393220 May  3 20:58 /scratch/aih7261/GenAIProject/results/report_20260503_205857.html
+-rw-r--r--. 1 aih7261 aih7261  848028 May  4 18:08 /scratch/aih7261/GenAIProject/results/report_20260504_180811.html
+-rw-r--r--. 1 aih7261 aih7261  848291 May  4 20:32 /scratch/aih7261/GenAIProject/results/report_20260504_203242.html
