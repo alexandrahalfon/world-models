@@ -1,10 +1,17 @@
-"""DreamerV3 wrapper that dispatches to env_jax via Singularity subprocess.
+"""DreamerV3 wrapper.
 
 Does NOT import JAX. All JAX/DreamerV3 code lives in scripts/dreamerv3_rollout.py
 which runs inside the env_jax Singularity overlay (separate from env_torch).
 
-JAX and PyTorch conflict on CUDA versions on NYU Greene — they must never share an env.
-See CLAUDE.md for the full constraint explanation.
+JAX and PyTorch conflict on CUDA versions on NYU Greene — they must never share
+an env. See CLAUDE.md.
+
+This wrapper is kept for in-process callers only (e.g. when env_torch is NOT
+already inside Singularity, such as a login node). The supported production
+entry point is `scripts/slurm/run_rollouts_dreamerv3.sbatch`, which launches
+the env_jax overlay directly from the compute node — Singularity does not
+support nested containers, so calling run_rollout() from *inside* a running
+env_torch overlay (for example from `run_rollouts.sbatch`) will fail.
 
 Required environment variables (set in scripts/hpc_config.sh):
     SINGULARITY_SIF      path to the .sif image
@@ -45,6 +52,17 @@ class DreamerV3Wrapper:
             raise EnvironmentError(
                 "SINGULARITY_SIF and OVERLAY_JAX must be set. "
                 "Run: source scripts/hpc_config.sh"
+            )
+        # Refuse to run nested. Singularity sets SINGULARITY_CONTAINER inside
+        # the running container; if it's set, the inner `singularity exec`
+        # below will fail with a permission error. Use
+        # scripts/slurm/run_rollouts_dreamerv3.sbatch instead.
+        if os.environ.get("SINGULARITY_CONTAINER") or os.environ.get("APPTAINER_CONTAINER"):
+            raise EnvironmentError(
+                "DreamerV3Wrapper.run_rollout() detected it is running inside "
+                "a Singularity container. Nested containers are not supported. "
+                "Submit scripts/slurm/run_rollouts_dreamerv3.sbatch from the "
+                "compute node instead."
             )
 
         script = os.path.join(os.path.dirname(__file__), "..", "..", "scripts", "dreamerv3_rollout.py")

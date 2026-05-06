@@ -130,8 +130,9 @@ def compute_fid(pred_frames_k: np.ndarray, true_frames_k: np.ndarray,
     the Fréchet distance. With N≈2000 and 2048-dim Inception activations the
     empirical covariance is rank-deficient, which makes the matrix square root
     in calculate_frechet_distance numerically unstable (LinAlgWarning: "Matrix is
-    singular"). A tiny ridge (default 1e-6) regularizes without materially shifting
-    the distance.
+    singular"). The default 1e-4 was needed to suppress that warning at this
+    sample size; 1e-6 was insufficient. The shift is tiny relative to the
+    typical Fréchet distance and preserves relative ordering.
     """
     if len(pred_frames_k) < 2000:
         warnings.warn(f"FID computed with only {len(pred_frames_k)} samples; recommend >= 2000.")

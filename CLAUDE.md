@@ -33,7 +33,7 @@ The MLP operates on Atari's 128-byte RAM state (not 84×84 pixel frames). A 3-la
 
 ## Fixed-Action Replay
 
-All rollouts use a shared action sequence collected from the IRIS/DIAMOND trained actor (not a random policy — random actions push models OOD from their training distribution and inflate error equally across all architectures, obscuring differences). Actions are saved to `data/atari/{game}_actions.npz` and reused across all models.
+All rollouts use a shared action sequence collected from the IRIS trained actor (not a random policy — random actions push models OOD from their training distribution and inflate error equally across all architectures, obscuring differences). Actions are saved to `data/atari/{game}_actions.npz` and reused across all models.
 
 ## Rollout Caching
 

@@ -1,4 +1,6 @@
 #!/bin/bash
+# IRIS-actor data collection runs at ~40 steps/s on A100 (IRIS forward pass per
+# action), so 500K transitions x 3 games ≈ 10.5h. Add training time on top.
 #SBATCH --account=ds_ga_3001-2026sp
 #SBATCH --partition=c12m85-a100-1
 #SBATCH --nodes=1
@@ -6,7 +8,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=16GB
 #SBATCH --gres=gpu:1
-#SBATCH --time=02:00:00
+#SBATCH --time=14:00:00
 #SBATCH --job-name=train_mlp
 #SBATCH --output=/scratch/%u/GenAIProject/results/logs/train_mlp_%j.out
 #SBATCH --requeue

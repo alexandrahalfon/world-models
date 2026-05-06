@@ -51,6 +51,27 @@ def main():
     except ImportError as e:
         raise ImportError("dreamerv3 not installed. Activate env_jax.") from e
 
+    # The method names below (configs.atari, Agent, world_model.observe,
+    # world_model.imagine, world_model.decode) match the patterns documented
+    # in the DreamerV3 reference implementation, but the installed package
+    # version may differ. Fail loudly with a clear message so the user knows
+    # exactly which symbol to fix instead of getting an opaque AttributeError
+    # mid-rollout. Run this script with --n_traj 4 --K 10 first to verify.
+    _required = [
+        ("dreamerv3.configs.atari",  hasattr(getattr(dreamerv3, "configs", object()), "atari")),
+        ("dreamerv3.Agent",          hasattr(dreamerv3, "Agent")),
+    ]
+    _missing = [name for name, ok in _required if not ok]
+    if _missing:
+        raise AttributeError(
+            "Installed dreamerv3 package does not expose: "
+            + ", ".join(_missing)
+            + ". Update scripts/dreamerv3_rollout.py to match the installed "
+              "API (see the DreamerV3 README for the equivalent symbols). "
+              "DRY-RUN this script with --n_traj 4 --K 10 before submitting "
+              "run_rollouts_dreamerv3.sbatch."
+        )
+
     actions_data = np.load(args.actions)
     actions = actions_data["actions"]  # [n_traj, K]
     saved_seeds = actions_data["seeds"] if "seeds" in actions_data.files else None
@@ -64,6 +85,15 @@ def main():
     config = dreamerv3.configs.atari.update({"logdir": args.checkpoint})
     agent = dreamerv3.Agent(config)
     agent.load(args.checkpoint)
+
+    wm = getattr(agent, "world_model", None)
+    if wm is None or not all(hasattr(wm, n) for n in ("observe", "imagine", "decode")):
+        raise AttributeError(
+            "agent.world_model is missing one of: observe, imagine, decode. "
+            "The installed dreamerv3 package likely renames these (e.g. "
+            "obs_step / img_step / decoder). Update scripts/dreamerv3_rollout.py "
+            "before resubmitting run_rollouts_dreamerv3.sbatch."
+        )
 
     pred_frames = np.zeros((args.n_traj, args.K, PIXEL_SIZE, PIXEL_SIZE, 3), dtype=np.uint8)
 

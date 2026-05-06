@@ -5,12 +5,15 @@ Creates fake .npz files in results/rollouts/ that mimic real model output shapes
 Each model gets a different injected alpha so exp1 produces realistic-looking curves.
 
   mlp:       alpha=1.8  shape [n_traj, K, 128]          (RAM space)
-  iris:      alpha=1.4  shape [n_traj, K, 84, 84, 3]    (pixel)
-  dreamerv3: alpha=1.1  shape [n_traj, K, 84, 84, 3]    (pixel)
-  diamond:   alpha=0.7  shape [n_traj, K, 84, 84, 3]    (pixel)
+  iris:      alpha=1.4  shape [n_traj, K, 64, 64, 3]    (pixel)
+  dreamerv3: alpha=1.1  shape [n_traj, K, 64, 64, 3]    (pixel)
+  diamond:   alpha=0.7  shape [n_traj, K, 64, 64, 3]    (pixel)
 
 The noise standard deviation at step k is sqrt(c) * k^(alpha/2), giving
   E_k = Var(pred - true) ≈ c * k^alpha  on the log-log scale.
+
+Each cache also writes a valid_mask of all True; the synthetic generator
+does not simulate mid-rollout terminations.
 """
 import os
 import sys
