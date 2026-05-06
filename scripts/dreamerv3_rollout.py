@@ -2,7 +2,15 @@
 
 Called by src/models/dreamerv3_wrapper.py via subprocess.
 Loads the official JAX DreamerV3 checkpoint, runs autoregressive rollout using
-pre-saved action sequences, decodes latent states to pixel frames, and saves results.
+pre-saved action sequences, decodes latent states to pixel frames at 64x64x3,
+and saves results.
+
+IMPORTANT: the DreamerV3 imagination loop must use the latent dynamics
+(`world_model.imagine` style), NOT `world_model.observe`, after step 0.
+`observe` re-encodes a real observation each step and so leaks ground truth
+into the prediction — invalidating the autoregressive-rollout protocol.
+
+Output frames are 64x64x3 to match PIXEL_SIZE in src/rollout.py.
 
 Usage:
     source ~/.bashrc && conda activate env_jax
@@ -28,11 +36,14 @@ def parse_args():
     return p.parse_args()
 
 
+PIXEL_SIZE = 64
+
+
 def main():
     args = parse_args()
 
     # These imports are intentionally deferred — this script only runs in env_jax
-    import jax
+    import jax  # noqa: F401
     import jax.numpy as jnp
 
     try:
@@ -42,40 +53,47 @@ def main():
 
     actions_data = np.load(args.actions)
     actions = actions_data["actions"]  # [n_traj, K]
+    saved_seeds = actions_data["seeds"] if "seeds" in actions_data.files else None
     assert actions.shape[0] >= args.n_traj and actions.shape[1] >= args.K
 
-    # Load checkpoint and initialize model
-    # NOTE: The exact dreamerv3 API depends on the repo version.
-    # Update these calls to match the installed dreamerv3 checkpoint loading API.
+    # Load checkpoint and initialize model.
+    # The exact API depends on the installed dreamerv3 version. The two-stage
+    # protocol below — encode the initial obs once, then imagine forward using
+    # only the latent and the action — is the *correct* one for this study;
+    # observe() at every step would leak ground truth and invalidate alpha.
     config = dreamerv3.configs.atari.update({"logdir": args.checkpoint})
     agent = dreamerv3.Agent(config)
     agent.load(args.checkpoint)
 
-    pred_frames = np.zeros((args.n_traj, args.K, 84, 84, 3), dtype=np.uint8)
+    pred_frames = np.zeros((args.n_traj, args.K, PIXEL_SIZE, PIXEL_SIZE, 3), dtype=np.uint8)
 
-    # Roll out autoregressively using saved action sequences
-    # Model is stepped on its own decoded predictions after step 0
     import gymnasium as gym
     env = gym.make(f"ALE/{args.game}-v5", obs_type="rgb", render_mode=None)
 
     rng = np.random.default_rng(args.seed)
     for traj_idx in range(args.n_traj):
-        seed_i = int(rng.integers(0, 2**31))
+        seed_i = int(saved_seeds[traj_idx]) if saved_seeds is not None else int(rng.integers(0, 2**31))
         obs, _ = env.reset(seed=seed_i)
-        obs = _resize_obs(obs)
+        obs_in = _resize_obs(obs, 84)  # DreamerV3 encoder operates at 84x84
 
         state = agent.initial_state(batch_size=1)
+        # Step 0: encode the real initial observation to get the first latent.
+        obs_jax = jnp.array(obs_in)[None]
+        first_action = jnp.array([int(actions[traj_idx, 0])])
+        latent, state = agent.world_model.observe(obs_jax, first_action, state)
 
         for k in range(args.K):
             action = int(actions[traj_idx, k])
-            # Step model autoregressively on its own previous prediction
-            obs_jax = jnp.array(obs)[None]  # [1, 84, 84, 3]
-            act_jax = jnp.array([action])
-            next_obs_latent, state = agent.world_model.observe(obs_jax, act_jax, state)
-            # Decode latent state to pixel frame — required before saving
-            next_obs_decoded = agent.world_model.decode(next_obs_latent)
-            obs = np.array(next_obs_decoded[0]).clip(0, 255).astype(np.uint8)
-            pred_frames[traj_idx, k] = obs
+            if k > 0:
+                # Pure imagination from latent — never re-encode predicted pixels.
+                act_jax = jnp.array([action])
+                latent, state = agent.world_model.imagine(latent, act_jax, state)
+            decoded = agent.world_model.decode(latent)  # in [0, 1] or [0, 255]
+            frame = np.array(decoded[0])
+            if frame.dtype != np.uint8:
+                frame = (frame * 255.0).clip(0, 255).astype(np.uint8) if frame.max() <= 1.5 \
+                    else frame.clip(0, 255).astype(np.uint8)
+            pred_frames[traj_idx, k] = _resize_obs(frame, PIXEL_SIZE)
 
     env.close()
 
@@ -83,12 +101,11 @@ def main():
     print(f"Saved pred_frames {pred_frames.shape} to {args.output}")
 
 
-def _resize_obs(obs: np.ndarray) -> np.ndarray:
-    """Resize Atari observation to 84x84x3 if needed."""
-    if obs.shape == (84, 84, 3):
+def _resize_obs(obs: np.ndarray, size: int) -> np.ndarray:
+    if obs.shape[:2] == (size, size):
         return obs
     from PIL import Image  # type: ignore[import]
-    return np.array(Image.fromarray(obs).resize((84, 84), Image.BILINEAR))
+    return np.array(Image.fromarray(obs).resize((size, size), Image.BILINEAR))
 
 
 if __name__ == "__main__":

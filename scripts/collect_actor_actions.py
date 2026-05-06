@@ -37,23 +37,48 @@ def main():
         iris = IRISWrapper(ckpt, num_actions=n_actions); iris.load_checkpoint()
         print(f"IRIS loaded from {ckpt}", flush=True)
         actions = np.zeros((args.n_traj, args.K), dtype=np.int32)
-        pbar = tqdm(range(args.n_traj), desc=f"{game}", unit="traj", ncols=100, mininterval=2.0)
-        for t in pbar:
-            obs, _ = env.reset(seed=int(rng.integers(0, 2**31)))
+        seeds = np.zeros((args.n_traj,), dtype=np.int64)
+        pbar = tqdm(total=args.n_traj, desc=f"{game}", unit="traj", ncols=100, mininterval=2.0)
+        # Only keep trajectories that survive K steps without termination.
+        # Mid-rollout resets desynchronize the action/state pairing — rollouts
+        # replayed against this action file would diverge from the actor's
+        # observed states, effectively making the actions random after the
+        # first termination.
+        traj_idx = 0
+        attempts = 0
+        max_attempts = 50 * args.n_traj
+        while traj_idx < args.n_traj:
+            attempts += 1
+            if attempts > max_attempts:
+                raise RuntimeError(
+                    f"{game}: could not collect {args.n_traj} K={args.K} "
+                    f"trajectories that survive without termination after "
+                    f"{attempts} attempts."
+                )
+            seed_i = int(rng.integers(0, 2**31))
+            obs, _ = env.reset(seed=seed_i)
             iris.reset_actor()
+            traj_actions = np.zeros((args.K,), dtype=np.int32)
+            survived = True
             for k in range(args.K):
                 a = iris.act(obs, temperature=args.temperature, should_sample=True)
-                actions[t, k] = a
+                traj_actions[k] = a
                 obs, _, terminated, truncated, _ = env.step(a)
                 if terminated or truncated:
-                    obs, _ = env.reset(seed=int(rng.integers(0, 2**31)))
-                    iris.reset_actor()
+                    survived = False
+                    break
+            if survived:
+                actions[traj_idx] = traj_actions
+                seeds[traj_idx] = seed_i
+                traj_idx += 1
+                pbar.update(1)
         pbar.close()
         env.close()
         out = os.path.join(args.out_dir, f"{game}_actions.npz")
-        np.savez_compressed(out, actions=actions)
+        np.savez_compressed(out, actions=actions, seeds=seeds)
         unique, counts = np.unique(actions, return_counts=True)
-        print(f"Saved {out} {actions.shape}; dist: {dict(zip(unique.tolist(), counts.tolist()))}", flush=True)
+        print(f"Saved {out} {actions.shape} ({attempts} attempts for {args.n_traj} survivors); "
+              f"dist: {dict(zip(unique.tolist(), counts.tolist()))}", flush=True)
 
 
 if __name__ == "__main__":

@@ -1,14 +1,24 @@
 games: [Breakout, Pong, Boxing]
 horizon_K: 50
 n_trajectories: 2000           # 2000 minimum for reliable FID estimates
-k_star_multiplier: 3          # validated via IRIS Breakout pilot (alpha=0.534, R2=0.977, k*=27)
-                               # MUST be validated with a pilot run before full SLURM array
-k_fit_min: 5                   # exclude k<5 from power-law fit and k* baseline:
-                               # DIAMOND replicates the initial obs into its 4-frame conditioning
-                               # buffer, so the first 4 predictions are conditioned on a fictional
-                               # history. k=5 is the first step where the buffer holds 4 real
-                               # predictions. Same threshold as fid_horizons[0] for consistency.
-fid_horizons: [5, 10, 20, 30, 50]   # k=1 excluded: near-identical frames → unstable FID
+k_star_multiplier: 3          # MUST be re-validated with a pilot after the
+                               # rollout-termination fix (commit "fix mid-rollout
+                               # env reset") landed; the prior value was tuned
+                               # against rollouts that contained the bug.
+k_fit_min: 6                   # exclude k<6 from power-law fit and k* baseline:
+                               # DIAMOND seeds its 4-frame conditioning buffer with the initial
+                               # obs at reset, so the buffer transitions are:
+                               #   k=1  buffer=[init,init,init,init]
+                               #   k=2  buffer=[init,init,init,pred1]
+                               #   k=3  buffer=[init,init,pred1,pred2]
+                               #   k=4  buffer=[init,pred1,pred2,pred3]
+                               #   k=5  buffer=[pred1,pred2,pred3,pred4]
+                               # k=5 is the *first* step where the buffer holds 4 predictions —
+                               # but those predictions themselves were generated from a partly
+                               # init-seeded buffer, so k=5 still shows a warm-up bump in
+                               # measured MSE. k_fit_min=6 starts the fit one step past the
+                               # last warm-up step. fid_horizons[0] tracks this.
+fid_horizons: [6, 10, 20, 30, 50]   # k<6 excluded: warm-up + near-identical frames → unstable FID
 seed: 42
 
 models:

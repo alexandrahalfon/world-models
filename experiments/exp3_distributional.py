@@ -66,22 +66,23 @@ def main():
             data = np.load(cache_path)
             pred_frames = data["pred_frames"]   # [n_traj, K, H, W, 3]
             true_frames = data["true_frames"]
+            valid_mask = data["valid_mask"] if "valid_mask" in data.files else None
 
-            # Fit one shared PCA basis on true frames pooled across the evaluated
-            # horizons. This keeps the projection space fixed across k so KL values
-            # are directly comparable. Subsample if pooling is too large for memory.
-            pooled_idx = [k - 1 for k in fid_horizons]
-            pooled_true = true_frames[:, pooled_idx].reshape(
-                -1, *true_frames.shape[2:]
-            )
+            # Fit the PCA basis on a *stationary* reference: true frames at k=1
+            # across all trajectories. This is the only sample where prediction
+            # and ground truth are by construction near-identical, so the basis
+            # captures the true-data manifold rather than horizon-induced drift.
+            # Pooling across horizons (the old behavior) baked drift into the
+            # basis itself and produced non-monotone KL with k.
+            ref_frames = true_frames[:, 0]  # [n_traj, H, W, 3]
             max_pool_samples = 8000
-            if len(pooled_true) > max_pool_samples:
+            if len(ref_frames) > max_pool_samples:
                 rng = np.random.default_rng(42)
-                sel = rng.choice(len(pooled_true), max_pool_samples, replace=False)
-                pooled_true = pooled_true[sel]
-            pca_ref = fit_reference_pca(pooled_true, n_components=0.95)
-            print(f"[exp3] {model_name}/{game}: PCA basis fit on {len(pooled_true)} "
-                  f"pooled true frames -> {pca_ref.n_components_} dims "
+                sel = rng.choice(len(ref_frames), max_pool_samples, replace=False)
+                ref_frames = ref_frames[sel]
+            pca_ref = fit_reference_pca(ref_frames, n_components=0.95)
+            print(f"[exp3] {model_name}/{game}: PCA basis fit on {len(ref_frames)} "
+                  f"k=1 true frames -> {pca_ref.n_components_} dims "
                   f"({pca_ref.explained_variance_ratio_.sum()*100:.1f}% var)")
 
             fid_vals = []
@@ -91,12 +92,23 @@ def main():
                 k_idx = k - 1  # horizons are 1-indexed in config
                 pred_k = pred_frames[:, k_idx]   # [n_traj, H, W, 3]
                 true_k = true_frames[:, k_idx]
+                if valid_mask is not None:
+                    live = valid_mask[:, k_idx]
+                    if live.sum() < 100:
+                        print(f"[exp3] {model_name}/{game} k={k}: only {int(live.sum())} live "
+                              f"trajectories — skipping (need >=100 for FID/KL).")
+                        fid_vals.append(float("nan"))
+                        kl_vals.append(float("nan"))
+                        continue
+                    pred_k = pred_k[live]
+                    true_k = true_k[live]
 
                 fid_val = compute_fid(pred_k, true_k)
                 kl_val = compute_pca_kl(pred_k, true_k, pca=pca_ref)
                 fid_vals.append(fid_val)
                 kl_vals.append(kl_val)
-                print(f"[exp3] {model_name}/{game} k={k}: FID={fid_val:.2f}, KL={kl_val:.4f}")
+                print(f"[exp3] {model_name}/{game} k={k}: FID={fid_val:.2f}, KL={kl_val:.4f} "
+                      f"(N={len(pred_k)})")
 
             all_fid[model_name][game] = fid_vals
             all_kl[model_name][game] = kl_vals

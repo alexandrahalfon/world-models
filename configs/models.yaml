@@ -11,13 +11,13 @@ mlp:
   batch_size: 256
 
 dreamerv3:
-  obs_shape: [84, 84, 3]
+  obs_shape: [64, 64, 3]
   # JAX checkpoint; inference handled by scripts/dreamerv3_rollout.py in env_jax
 
 iris:
-  obs_shape: [84, 84, 3]
+  obs_shape: [64, 64, 3]
   # PyTorch checkpoint; see src/models/iris_wrapper.py
 
 diamond:
-  obs_shape: [84, 84, 3]
+  obs_shape: [64, 64, 3]
   # PyTorch checkpoint; see src/models/diamond_wrapper.py

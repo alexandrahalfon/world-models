@@ -35,7 +35,7 @@ MODELS = {
 def generate_rollout(model_name: str, game: str, mcfg: dict, rng: np.random.Generator) -> str:
     alpha = mcfg["alpha"]
     c = mcfg["c"]
-    obs_shape = (128,) if mcfg["space"] == "ram" else (84, 84, 3)
+    obs_shape = (128,) if mcfg["space"] == "ram" else (64, 64, 3)
 
     out_path = os.path.join(ROLLOUT_DIR, f"{model_name}_{game}.npz")
     if os.path.exists(out_path):
@@ -54,8 +54,10 @@ def generate_rollout(model_name: str, game: str, mcfg: dict, rng: np.random.Gene
 
     pred_frames = np.clip(pred_frames, 0, 255).astype(np.uint8)
     actions = rng.integers(0, 18, size=(N_TRAJ, K), dtype=np.int32)
+    valid_mask = np.ones((N_TRAJ, K), dtype=bool)
 
-    np.savez_compressed(out_path, pred_frames=pred_frames, true_frames=true_frames, actions=actions)
+    np.savez_compressed(out_path, pred_frames=pred_frames, true_frames=true_frames,
+                        actions=actions, valid_mask=valid_mask)
     return out_path
 
 
@@ -71,7 +73,7 @@ def main():
         for game in GAMES:
             done += 1
             alpha = mcfg["alpha"]
-            obs_shape = (128,) if mcfg["space"] == "ram" else (84, 84, 3)
+            obs_shape = (128,) if mcfg["space"] == "ram" else (64, 64, 3)
             print(
                 f"[{done}/{total}] {model_name}/{game}  alpha={alpha}"
                 f"  shape=({N_TRAJ},{K},{','.join(str(d) for d in obs_shape)})",

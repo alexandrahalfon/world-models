@@ -78,8 +78,11 @@ def main():
         data = np.load(cache_path)
         pred_frames = data["pred_frames"]
         true_frames = data["true_frames"]
+        # valid_mask is written by the post-fix rollout pipeline; older caches
+        # won't have it. When absent, fall back to all-valid (legacy behavior).
+        valid_mask = data["valid_mask"] if "valid_mask" in data.files else None
 
-        E_k = per_step_mse(pred_frames, true_frames)
+        E_k = per_step_mse(pred_frames, true_frames, valid_mask=valid_mask)
         fit = fit_power_law(E_k, k_star_multiplier=k_star_mult, k_min=k_fit_min)
 
         df = pd.DataFrame({"k": np.arange(1, len(E_k) + 1), "mse": E_k})

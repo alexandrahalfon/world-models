@@ -82,11 +82,19 @@ def plot_frame_grid(
                 model = models[row_idx - (1 if true_frames else 0)]
                 frame = frames_by_model[model][k]
             ax.imshow(frame)
-            ax.axis("off")
+            # Hide ticks and spines but keep the axis present so set_ylabel
+            # (and the explicit row text below) renders. ax.axis("off") would
+            # hide the ylabel along with everything else.
+            ax.set_xticks([])
+            ax.set_yticks([])
+            for spine in ax.spines.values():
+                spine.set_visible(False)
             if row_idx == 0:
                 ax.set_title(f"k={k+1}", fontsize=10)
             if col_idx == 0:
-                ax.set_ylabel(label, fontsize=9, rotation=90, labelpad=40)
+                # Render the row label as left-side text — robust to layout.
+                ax.text(-0.08, 0.5, label, transform=ax.transAxes,
+                        ha="right", va="center", fontsize=10, fontweight="bold")
 
     fig.suptitle(f"{game} — Predicted frames at k = {[k+1 for k in ks]}", y=1.01)
     fig.tight_layout()

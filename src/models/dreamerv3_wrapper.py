@@ -74,9 +74,10 @@ class DreamerV3Wrapper:
         data = np.load(output_path)
         pred_frames = data["pred_frames"]
 
-        # DreamerV3 must output decoded pixel frames, not latents
-        assert pred_frames.shape[-3:] == (84, 84, 3), (
-            f"Expected decoded pixel frames [n_traj, K, 84, 84, 3], got shape {pred_frames.shape}. "
-            "dreamerv3_rollout.py must decode latent states before saving."
+        # DreamerV3 must output decoded pixel frames at 64x64x3 to match the
+        # PIXEL_SIZE used by IRIS, DIAMOND, and rollout._collect_true_frames.
+        assert pred_frames.shape[-3:] == (64, 64, 3), (
+            f"Expected decoded pixel frames [n_traj, K, 64, 64, 3], got shape {pred_frames.shape}. "
+            "dreamerv3_rollout.py must decode latent states and resize to 64x64."
         )
         return pred_frames

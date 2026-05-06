@@ -12,8 +12,12 @@ Key design decisions:
   on a fictional history and inflate MSE. Set k_min=5 to skip that regime.
 - PCA-KL uses a *fixed* PCA basis across horizons so KL values are comparable as
   the true-frame distribution drifts with k. Fit the basis once via
-  fit_reference_pca(true_frames_pooled), then pass it to compute_pca_kl(...).
+  fit_reference_pca(reference_frames), then pass it to compute_pca_kl(...).
   Re-fitting PCA per horizon (the old behavior) makes per-k KL incomparable.
+  Pool the reference from a *stationary* source (e.g. true frames at k=1 across
+  all trajectories), NOT the per-horizon true frames pooled across k — the
+  latter bakes the very horizon-drift you are trying to measure into the basis,
+  producing non-monotone KL trajectories.
 - FID is a Fréchet distance between Inception activation Gaussians. With N≈2000
   and 2048-dim activations the empirical covariance is rank-deficient, so we add
   a tiny ridge (eps*I) before computing the matrix square root.
@@ -28,17 +32,29 @@ from sklearn.preprocessing import StandardScaler
 
 # ── Per-step MSE ──────────────────────────────────────────────────────────────
 
-def per_step_mse(pred_frames: np.ndarray, true_frames: np.ndarray) -> np.ndarray:
+def per_step_mse(pred_frames: np.ndarray, true_frames: np.ndarray,
+                 valid_mask: np.ndarray | None = None) -> np.ndarray:
     """Compute mean squared error at each horizon step k.
 
     pred_frames, true_frames: [n_traj, K, ...obs_shape]
-    Returns: E_k array of shape [K], averaged over trajectories and spatial dims.
+    valid_mask: optional [n_traj, K] bool array — True where the real env had
+        not yet terminated. When provided, MSE at step k averages only over
+        trajectories that were still live at that step. This avoids inflating
+        E_k with comparisons to a frozen "last real frame" emitted after
+        termination.
+    Returns: E_k array of shape [K], averaged over (live) trajectories and spatial dims.
     """
     assert pred_frames.shape == true_frames.shape
+    n_traj, K = pred_frames.shape[:2]
     diff = pred_frames.astype(np.float64) - true_frames.astype(np.float64)
-    # Average over trajectories and all spatial dimensions
-    sq = diff ** 2
-    return sq.reshape(pred_frames.shape[0], pred_frames.shape[1], -1).mean(axis=(0, 2))
+    sq = diff.reshape(n_traj, K, -1).mean(axis=2)  # [n_traj, K] per-step squared error
+    if valid_mask is None:
+        return sq.mean(axis=0)
+    assert valid_mask.shape == (n_traj, K)
+    counts = valid_mask.sum(axis=0).astype(np.float64)
+    counts = np.maximum(counts, 1.0)  # avoid divide-by-zero
+    masked = np.where(valid_mask, sq, 0.0)
+    return masked.sum(axis=0) / counts
 
 
 # ── Power-law fit ─────────────────────────────────────────────────────────────
@@ -104,7 +120,7 @@ def fit_power_law(E_k: np.ndarray, k_star_multiplier: float = 10.0,
 # ── FID ───────────────────────────────────────────────────────────────────────
 
 def compute_fid(pred_frames_k: np.ndarray, true_frames_k: np.ndarray,
-                cov_ridge: float = 1e-6) -> float:
+                cov_ridge: float = 1e-4) -> float:
     """Compute Fréchet Inception Distance between predicted and true frames at horizon k.
 
     pred_frames_k, true_frames_k: [N, H, W, C] uint8 (any H,W — pytorch-fid resizes

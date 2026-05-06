@@ -70,13 +70,20 @@ class MLPBaseline:
         return losses
 
     def predict(self, ram_state: np.ndarray, action: int) -> np.ndarray:
-        """Stateless single-step prediction. ram_state: [128] uint8, action: scalar int."""
+        """Stateless single-step prediction. ram_state: [128] uint8, action: scalar int.
+
+        Output is clamped to [0, 1] in float space *before* re-feeding the model
+        on subsequent steps. Without this clamp, an unbounded raw prediction
+        propagates back through self._cur_obs (cast to uint8 then back to /255),
+        which can saturate the network on a single bad step and produce the
+        runaway MSE seen in MLP Pong.
+        """
         self.model.eval()
         with torch.no_grad():
             s = torch.tensor(ram_state / 255.0, dtype=torch.float32).unsqueeze(0).to(self.device)
             a = torch.tensor([action], dtype=torch.float32).to(self.device)
-            pred = self.model(s, a).squeeze(0).cpu().numpy()
-        return (pred * 255.0).clip(0, 255).astype(np.uint8)
+            pred = self.model(s, a).squeeze(0).clamp(0.0, 1.0).cpu().numpy()
+        return (pred * 255.0).round().clip(0, 255).astype(np.uint8)
 
     # Unified stateful interface (matches IRISWrapper / DIAMONDWrapper)
     def reset(self, obs_uint8: np.ndarray) -> np.ndarray:

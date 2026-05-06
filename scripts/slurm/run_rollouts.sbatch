@@ -8,9 +8,13 @@
 #
 # PILOT FIRST: run a single task interactively with n_traj=200 to validate
 # k_star_multiplier before submitting this. See CLAUDE.md.
+#
+# DreamerV3 tasks (9-11) shell out into the env_jax overlay via
+# DreamerV3Wrapper.run_rollout(); OVERLAY_JAX and SINGULARITY_SIF are exported
+# below from hpc_config.sh so the inner subprocess can pick them up.
 #SBATCH --account=ds_ga_3001-2026sp
 #SBATCH --partition=c12m85-a100-1
-#SBATCH --array=0-8
+#SBATCH --array=0-11
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
@@ -23,8 +27,8 @@
 
 source /scratch/$USER/GenAIProject/scripts/hpc_config.sh
 
-MODELS=(mlp mlp mlp iris iris iris diamond diamond diamond)
-GAMES=(Breakout Pong Boxing Breakout Pong Boxing Breakout Pong Boxing)
+MODELS=(mlp mlp mlp iris iris iris diamond diamond diamond dreamerv3 dreamerv3 dreamerv3)
+GAMES=(Breakout Pong Boxing Breakout Pong Boxing Breakout Pong Boxing Breakout Pong Boxing)
 
 MODEL=${MODELS[$SLURM_ARRAY_TASK_ID]}
 GAME=${GAMES[$SLURM_ARRAY_TASK_ID]}
@@ -33,6 +37,8 @@ echo "Task $SLURM_ARRAY_TASK_ID: model=$MODEL game=$GAME"
 
 module purge
 
+# OVERLAY_JAX and SINGULARITY_SIF must be visible inside the env_torch shell so
+# the DreamerV3 wrapper can shell out into the env_jax overlay.
 singularity exec --nv \
     --overlay "$OVERLAY_TORCH:ro" \
     "$SINGULARITY_SIF" \
@@ -40,6 +46,8 @@ singularity exec --nv \
         source /ext3/env.sh
         conda activate env_torch
         cd $PROJECT
+        export SINGULARITY_SIF='$SINGULARITY_SIF'
+        export OVERLAY_JAX='$OVERLAY_JAX'
         python - <<'PYEOF'
 import sys, yaml, os
 sys.path.insert(0, '.')
@@ -81,6 +89,10 @@ elif model_name == 'diamond':
         num_actions=num_actions,
     )
     m.load_checkpoint()
+    obs_type = 'rgb'
+elif model_name == 'dreamerv3':
+    from src.models.dreamerv3_wrapper import DreamerV3Wrapper
+    m = DreamerV3Wrapper(checkpoint_path='checkpoints/dreamerv3/')
     obs_type = 'rgb'
 else:
     raise ValueError(f'Unknown model {model_name}')
