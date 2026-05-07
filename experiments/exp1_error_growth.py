@@ -54,10 +54,11 @@ def main():
     games = cfg["games"]
     K = cfg["horizon_K"]
     k_star_mult = cfg["k_star_multiplier"]
-    k_fit_min = cfg.get("k_fit_min", 1)
+    # k_fit_min may be int (legacy global) or dict (per-model); resolved below per pair.
+    k_fit_min_cfg = cfg.get("k_fit_min", 1)
     model_cfgs = cfg["models"]
-    log.info("Power-law fit window: k=%d..%d (k_star_multiplier=%g)",
-             k_fit_min, K, k_star_mult)
+    log.info("Power-law fit window config: k_fit_min=%s (k_star_multiplier=%g, K=%d)",
+             k_fit_min_cfg, k_star_mult, K)
 
     summary_rows = []
     all_error_curves: dict[str, dict[str, np.ndarray]] = {m: {} for m in model_cfgs}
@@ -81,6 +82,12 @@ def main():
         # valid_mask is written by the post-fix rollout pipeline; older caches
         # won't have it. When absent, fall back to all-valid (legacy behavior).
         valid_mask = data["valid_mask"] if "valid_mask" in data.files else None
+
+        # Resolve per-model k_fit_min (dict) or global int (legacy).
+        if isinstance(k_fit_min_cfg, dict):
+            k_fit_min = k_fit_min_cfg.get(model_name, 1)
+        else:
+            k_fit_min = k_fit_min_cfg
 
         E_k = per_step_mse(pred_frames, true_frames, valid_mask=valid_mask)
         fit = fit_power_law(E_k, k_star_multiplier=k_star_mult, k_min=k_fit_min)
