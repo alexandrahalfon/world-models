@@ -1,5 +1,7 @@
 # Results Summary
 
+> **⚠️ STALE DATA**: The results below are from the pre-fix pipeline run (before ec77acb). Multiple correctness bugs have since been fixed (K-survivor action collection, MLP training distribution, MLP prediction clamping, per-model k_fit_min, PCA basis stationarity, valid_mask). A re-run on HPC with the fixed code will produce different (cleaner) results. These numbers are preserved for reference only.
+
 **Project**: How does prediction error accumulate over rollout horizons across generative world models?  
 **Course**: DS-GA 3001 013, Spring 2026  
 **Authors**: Alexandra Halfon & Mina Sha  

@@ -41,7 +41,7 @@ Error growth follows a power law: `E_k ~ c · k^α`, where α (the exponent) cha
 
 6. **MLP is qualitative only**: MLP operates in 128-dim RAM space; its α is not comparable to pixel-space models. It serves as a structural baseline.
 
-7. **k_fit_min=6**: DIAMOND replicates the initial observation into its 4-frame conditioning buffer. k=1–4 are on fictional history, and k=5 still shows a warm-up bump (the buffer holds 4 predictions that were themselves generated from a partly init-seeded buffer). The power-law fit starts at k=6.
+7. **k_fit_min is per-model**: DIAMOND uses k_fit_min=6 (4-frame conditioning warm-up + k=5 transient). IRIS, DreamerV3, and MLP use k_fit_min=2 (only k=1 is a stateful-initial-step quirk). This avoids discarding valid early-horizon data from models that don't have DIAMOND's warm-up.
 
 8. **k_star_multiplier=3**: Must be re-validated with a pilot run after the rollout-termination fix landed.
 

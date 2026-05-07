@@ -14,7 +14,11 @@
 5. Report R² goodness-of-fit
 
 **Key parameters**:
-- `k_fit_min = 6`: Excludes DIAMOND's conditioning warm-up (k=1–4 on fictional history, k=5 residual transient)
+- `k_fit_min`: Per-model exclusion window (dict in config):
+  - `diamond: 6` — skip 4-frame conditioning warm-up + k=5 transient
+  - `iris: 2` — KV-cache initialized from real-obs tokens; only k=1 quirky
+  - `dreamerv3: 2` — RSSM observed once at reset
+  - `mlp: 2` — stateless
 - `k_star_multiplier = 3`: Must be re-validated after the rollout-termination fix
 - `valid_mask`: When present in cache, MSE only averages over trajectories that haven't terminated
 
@@ -95,7 +99,7 @@
 | Metric | Formula / Method | Interpretation |
 |--------|-----------------|----------------|
 | E_k (MSE) | mean((pred_k - true_k)²) over live trajectories and pixels | Average pixel-level prediction error at step k |
-| α (alpha) | Slope of log(E_k) vs log(k), fit on k=6..50 | Rate of error compounding (higher = faster degradation) |
+| α (alpha) | Slope of log(E_k) vs log(k), fit on k=k_fit_min..50 (per-model) | Rate of error compounding (higher = faster degradation) |
 | c | Intercept of power-law fit | Initial error scale |
 | k* | First k ≥ k_fit_min where E_k > 3× baseline | Practical reliability horizon |
 | R² | 1 - SS_res/SS_tot on log-log fit | Goodness of power-law fit (1.0 = perfect) |

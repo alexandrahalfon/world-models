@@ -93,8 +93,8 @@ All experiment parameters live in `configs/experiment.yaml`:
 - `horizon_K: 50` — maximum rollout steps
 - `n_trajectories: 2000` — minimum for reliable FID
 - `k_star_multiplier: 3` — must be re-validated after rollout-termination fix
-- `k_fit_min: 6` — skip DIAMOND conditioning warm-up (k=1–5)
-- `fid_horizons: [6, 10, 20, 30, 50]` — k<6 excluded (warm-up + unstable FID)
+- `k_fit_min`: per-model dict (diamond: 6, iris: 2, dreamerv3: 2, mlp: 2)
+- `fid_horizons: [6, 10, 20, 30, 50]` — k<6 excluded globally (keeps DIAMOND's FID baseline well-defined)
 - `seed: 42` — reproducibility
 
 All pixel models use `obs_shape: [64, 64, 3]` in `configs/models.yaml`.
